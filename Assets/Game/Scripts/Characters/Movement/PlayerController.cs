@@ -1,8 +1,9 @@
+using Game.Characters.Animations;
 using Game.DI;
 using Game.UserInput;
 using UnityEngine;
 
-namespace Game.Characters
+namespace Game.Characters.Movement
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerController : DIBehaviour
@@ -17,14 +18,18 @@ namespace Game.Characters
         private ActionState movementActionState;
         private JumpMode jumpMode;
         private Vector2 movementVector;
+        private CharacterAnimator characterAnimator;
 
         protected override void Awake()
         {
             base.Awake();
 
             rigidbody2D = GetComponent<Rigidbody2D>();
+            characterAnimator = GetComponent<CharacterAnimator>();
 
             playerInput.ActionEvent += OnAction;
+
+            characterAnimator.SetIdleMode();
         }
 
         protected override void OnDestroy()
@@ -32,6 +37,28 @@ namespace Game.Characters
             playerInput.ActionEvent -= OnAction;
 
             base.OnDestroy();
+        }
+
+        private void Update()
+        {
+            if (movementActionState == ActionState.Stop && jumpMode == JumpMode.None)
+            {
+                // TODO: Do this only once..
+                if (rigidbody2D.velocity == Vector2.zero)
+                {
+                    characterAnimator.SetIdleMode();
+                }
+
+                return;
+            }
+
+            if (jumpMode == JumpMode.None)
+            {
+                characterAnimator.SetWalkMode();
+            }
+
+            characterAnimator.SetWalkSpeed(rigidbody2D.velocity.x);
+            characterAnimator.SetJumpSpeed(rigidbody2D.velocity.y);
         }
 
         private void FixedUpdate()
@@ -90,6 +117,11 @@ namespace Game.Characters
             }
 
             movementActionState = actionState;
+
+            if (jumpMode == JumpMode.None)
+            {
+                characterAnimator.SetWalkMode();
+            }
         }
 
         private Vector3 GetMovementVector(MoveDirection moveDirection)
@@ -119,6 +151,8 @@ namespace Game.Characters
             {
                 jumpMode++;
             }
+
+            characterAnimator.SetJumpMode();
         }
     }
 }

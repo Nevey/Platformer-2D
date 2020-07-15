@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 653239977657492619}
   - component: {fileID: 653239977657492617}
   - component: {fileID: 5626577309535303678}
+  - component: {fileID: 7605959626019155019}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -131,9 +132,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 653239977657492621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d23030e01279d8b419f405cb8c844541, type: 3}
+  m_Script: {fileID: 11500000, guid: a0eb9c8dc06e64f458ccc85483e79e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementAcceleration: 1
   maxMovementSpeed: 4
   jumpStrength: 3.5
+--- !u!114 &7605959626019155019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653239977657492621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1bfaa942cf2da4bb70be29bb4c1dac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultAnimationInterval: 0.1
+  idleSprites:
+  - {fileID: -8711639992148211659, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
+  walkSpeedMultiplier: 0.015
+  walkSprites:
+  - {fileID: -1235727586745845334, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
+  - {fileID: -1071726394229842972, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
+  - {fileID: -7760781889259200773, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
+  - {fileID: -6273516331102826607, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
+  - {fileID: 8533522069251888223, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
+  - {fileID: 7469224613546395363, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
+  - {fileID: 6818334044060403641, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
+  - {fileID: 2517743834984194692, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
+  jumpSprites:
+  - {fileID: -1590713170655242202, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
