@@ -1,14 +1,17 @@
+using Game.DI;
 using Game.StateMachines;
-using UnityEngine.SceneManagement;
+using Game.Utils;
 
 namespace Game.AppFlow.States
 {
     public class BootState : State
     {
+        [Inject] private SceneLoader sceneLoader;
+        
         protected override void OnEnter()
         {
-            SceneManager.LoadSceneAsync("Main");
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            // Unload all open scenes, in case we're in the editor and have multiple scenes open
+            sceneLoader.UnloadAllScenes(UnloadAllScenesFinished, "Boot");
         }
 
         protected override void OnExit()
@@ -16,11 +19,16 @@ namespace Game.AppFlow.States
             
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        private void UnloadAllScenesFinished()
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+            // Load Main and UI scenes
+            sceneLoader.LoadScenes(OnMainScenesLoaded, "Main", "UI");
+        }
 
-            owner.ToNextState();
+        private void OnMainScenesLoaded()
+        {
+            // Unload Boot scene
+            sceneLoader.UnloadScenes(owner.ToNextState, "Boot");
         }
     }
 }
