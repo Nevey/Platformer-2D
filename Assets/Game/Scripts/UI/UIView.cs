@@ -6,7 +6,7 @@ namespace Game.UI
     /// Core object for UIController to use.
     /// Extend from this class to add new ways of handling UI, much like UIScreen and UIWidget.
     /// </summary>
-    public abstract class UIView : CardboardCoreBehaviour
+    public abstract class UIView : DIBehaviour
     {
         // TODO: Check if UIController called Show/Hide, or someone else
         protected abstract bool AllowDirectControl { get; }

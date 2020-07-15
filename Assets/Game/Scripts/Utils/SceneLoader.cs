@@ -53,15 +53,15 @@ namespace Game.Utils
 
         private void CheckForLoadingFinished()
         {
-            CheckFinished(loadingScenes, loadingFinishedCallback);
+            CheckFinished(loadingScenes, ref loadingFinishedCallback);
         }
 
         private void CheckForUnloadingFinished()
         {
-            CheckFinished(unloadingScenes, unloadFinishedCallback);
+            CheckFinished(unloadingScenes, ref unloadFinishedCallback);
         }
 
-        private void CheckFinished(List<string> sceneNames, Action callback)
+        private void CheckFinished(List<string> sceneNames, ref Action callback)
         {
             if (sceneNames.Count > 0)
             {
@@ -69,6 +69,7 @@ namespace Game.Utils
             }
 
             callback?.Invoke();
+            callback = null;
         }
 
         public void LoadScenes(params string[] sceneNames)
@@ -103,6 +104,8 @@ namespace Game.Utils
         {
             unloadFinishedCallback = callback;
 
+            int unloadSceneCount = 0;
+
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
                 Scene scene = SceneManager.GetSceneAt(i);
@@ -113,6 +116,12 @@ namespace Game.Utils
                 }
 
                 UnloadScene(scene.name);
+                unloadSceneCount++;
+            }
+
+            if (unloadSceneCount == 0)
+            {
+                CheckForUnloadingFinished();
             }
         }
     }

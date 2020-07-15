@@ -1,6 +1,7 @@
 using Game.DI;
 using Game.StateMachines;
 using Game.Utils;
+using UnityEngine;
 
 namespace Game.AppFlow.States
 {
@@ -12,6 +13,8 @@ namespace Game.AppFlow.States
         {
             // Unload all open scenes, in case we're in the editor and have multiple scenes open
             sceneLoader.UnloadAllScenes(UnloadAllScenesFinished, "Boot");
+
+            Application.targetFrameRate = 60;
         }
 
         protected override void OnExit()
@@ -21,8 +24,8 @@ namespace Game.AppFlow.States
 
         private void UnloadAllScenesFinished()
         {
-            // Load Main and UI scenes
-            sceneLoader.LoadScenes(OnMainScenesLoaded, "Main", "UI");
+            // Load UI Scene
+            sceneLoader.LoadScenes(OnMainScenesLoaded, "UI");
         }
 
         private void OnMainScenesLoaded()
