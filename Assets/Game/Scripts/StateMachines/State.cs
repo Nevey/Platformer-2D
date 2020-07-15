@@ -1,3 +1,4 @@
+using Game.DI;
 using Game.Utils;
 
 namespace Game.StateMachines
@@ -22,6 +23,7 @@ namespace Game.StateMachines
         public void Enter()
         {
             Log.Write(GetType().Name);
+            Injector.Inject(this);
             OnEnter();
         }
 
@@ -29,6 +31,7 @@ namespace Game.StateMachines
         {
             Log.Write(GetType().Name);
             OnExit();
+            Injector.Dump(this);
         }
     }
 }
