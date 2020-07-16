@@ -1,9 +1,9 @@
-﻿using Game.Utils;
+﻿using Game.Animations;
 using UnityEngine;
 
 namespace Game.Characters.Animations
 {
-    public class CharacterAnimator : SpritesheetAnimation
+    public class CharacterAnimator : SpritesheetAnimator
     {
         [Header("Idle Animation")]
         [SerializeField] private Sprite[] idleSprites;

@@ -1,10 +1,9 @@
-using Game.Utils;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.Characters.Animations
+namespace Game.Animations
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public abstract class SpritesheetAnimation : MonoBehaviour
+    public abstract class SpritesheetAnimator : MonoBehaviour
     {
         [SerializeField] private float defaultAnimationInterval = 0.1f;
 

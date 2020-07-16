@@ -15,7 +15,7 @@ namespace Game.Characters.Movement
         [Inject] private PlayerInputController playerInput;
 
         private new Rigidbody2D rigidbody2D;
-        private ActionState movementActionState;
+        private ActionState movementActionState = ActionState.Stop;
         private JumpMode jumpMode;
         private Vector2 movementVector;
         private CharacterAnimator characterAnimator;
@@ -43,7 +43,6 @@ namespace Game.Characters.Movement
         {
             if (movementActionState == ActionState.Stop && jumpMode == JumpMode.None)
             {
-                // TODO: Do this only once..
                 if (rigidbody2D.velocity == Vector2.zero)
                 {
                     characterAnimator.SetIdleMode();
