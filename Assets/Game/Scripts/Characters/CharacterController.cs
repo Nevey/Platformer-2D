@@ -1,15 +1,13 @@
-using System.Collections;
 using Game.Characters.Animations;
 using Game.Characters.Movement;
 using Game.DI;
 using Game.UserInput;
-using Game.Utils;
 using UnityEngine;
 
 namespace Game.Characters
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(CapsuleCollider2D))]
     [RequireComponent(typeof(CharacterAnimator))]
     public abstract class CharacterController : DIBehaviour
     {
@@ -18,7 +16,7 @@ namespace Game.Characters
         [SerializeField] private float jumpStrength = 5f;
 
         private new Rigidbody2D rigidbody2D;
-        private new Collider2D collider2D;
+        private new CapsuleCollider2D capsuleCollider2D;
         private CharacterAnimator characterAnimator;
 
         private ActionState movementActionState = ActionState.Stop;
@@ -32,7 +30,7 @@ namespace Game.Characters
             base.Awake();
 
             rigidbody2D = GetComponent<Rigidbody2D>();
-            collider2D = GetComponent<Collider2D>();
+            capsuleCollider2D = GetComponent<CapsuleCollider2D>();
             characterAnimator = GetComponent<CharacterAnimator>();
 
             characterAnimator.SetIdleMode();
@@ -62,7 +60,6 @@ namespace Game.Characters
         protected virtual void FixedUpdate()
         {
             LayerMask mask = LayerMask.GetMask("Ground", "Characters");
-            CapsuleCollider2D capsuleCollider2D = (CapsuleCollider2D)collider2D;
             RaycastHit2D[] hits = Physics2D.CapsuleCastAll(transform.position, capsuleCollider2D.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.3f, mask);
             HandleHits(hits);
 
