@@ -153,7 +153,7 @@ MonoBehaviour:
   defaultAnimationInterval: 0.1
   idleSprites:
   - {fileID: -8711639992148211659, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
-  walkSpeedMultiplier: 0.015
+  walkSpeedMultiplier: 0.01
   walkSprites:
   - {fileID: -1235727586745845334, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
   - {fileID: -1071726394229842972, guid: 80da7c807b3f37f42a135c40161a5c05, type: 3}
