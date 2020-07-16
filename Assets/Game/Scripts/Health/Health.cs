@@ -15,6 +15,7 @@ namespace Game.Health
 
         public int CurrentHealth => currentHealth;
 
+        public event Action<int> HealthUpdatedEvent;
         public event Action<Health> KilledEvent;
 
         protected override void Awake()
@@ -22,6 +23,7 @@ namespace Game.Health
             base.Awake();
 
             currentHealth = startHealth;
+            UpdateHealth(0);
 
             deathController.RegisterHealthComponent(this);
         }
@@ -45,6 +47,9 @@ namespace Game.Health
         public void UpdateHealth(int amount)
         {
             currentHealth += amount;
+
+            HealthUpdatedEvent?.Invoke(currentHealth);
+
             CheckForKilled();
         }
 
