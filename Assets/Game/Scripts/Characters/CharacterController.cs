@@ -16,7 +16,7 @@ namespace Game.Characters
         [SerializeField] private float jumpStrength = 5f;
 
         private new Rigidbody2D rigidbody2D;
-        private new CapsuleCollider2D capsuleCollider2D;
+        private CapsuleCollider2D capsuleCollider2D;
         private CharacterAnimator characterAnimator;
 
         private ActionState movementActionState = ActionState.Stop;
@@ -59,9 +59,7 @@ namespace Game.Characters
 
         protected virtual void FixedUpdate()
         {
-            LayerMask mask = LayerMask.GetMask("Ground", "Characters");
-            RaycastHit2D[] hits = Physics2D.CapsuleCastAll(transform.position, capsuleCollider2D.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.3f, mask);
-            HandleHits(hits);
+            CheckForGroundHit();
 
             if (movementActionState == ActionState.Stop)
             {
@@ -81,8 +79,11 @@ namespace Game.Characters
             rigidbody2D.velocity = velocity;
         }
 
-        private void HandleHits(RaycastHit2D[] hits)
+        private void CheckForGroundHit()
         {
+            LayerMask mask = LayerMask.GetMask("Ground", "Characters");
+            RaycastHit2D[] hits = Physics2D.CapsuleCastAll(transform.position, capsuleCollider2D.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.3f, mask);
+
             if (hits.Length == 1 && jumpMode == JumpMode.None)
             {
                 characterAnimator.SetJumpMode();

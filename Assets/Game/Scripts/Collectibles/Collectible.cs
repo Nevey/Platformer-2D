@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Game.Collectibles
@@ -9,6 +10,7 @@ namespace Game.Collectibles
         [SerializeField] private bool destroyOnCollect = true;
         [SerializeField] private float minDistanceUntilCollect = 0.1f;
         [SerializeField] private float moveTowardsAcceleration = 0.1f;
+        [SerializeField] private bool scaleDuringCollect;
 
         private new Collider2D collider2D;
         private float moveTowardsSpeed;
@@ -66,6 +68,11 @@ namespace Game.Collectibles
             collider2D.enabled = false;
             target = other.transform;
             collectMode = CollectMode.MovingToTarget;
+
+            if (scaleDuringCollect)
+            {
+                transform.DOScale(1.5f, 1f).SetEase(Ease.OutElastic);
+            }
         }
     }
 }
