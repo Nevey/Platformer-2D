@@ -10,7 +10,7 @@ namespace Game.Health
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            Health otherHealth = other.gameObject.GetComponent<Health>();
+            HealthComponent otherHealth = other.gameObject.GetComponent<HealthComponent>();
 
             if (instaKill)
             {

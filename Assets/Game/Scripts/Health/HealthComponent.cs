@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using Game.DI;
 using UnityEngine;
 
 namespace Game.Health
 {
     [RequireComponent(typeof(Collider2D))]
-    public class Health : DIBehaviour
+    public class HealthComponent : DIBehaviour
     {
         [SerializeField] private int startHealth = 100;
 
@@ -16,7 +16,7 @@ namespace Game.Health
         public int CurrentHealth => currentHealth;
 
         public event Action<int> HealthUpdatedEvent;
-        public event Action<Health> KilledEvent;
+        public event Action<HealthComponent> KilledEvent;
 
         protected override void Awake()
         {

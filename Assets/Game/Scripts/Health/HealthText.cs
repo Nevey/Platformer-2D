@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Health
 {
-    [RequireComponent(typeof(Health))]
+    [RequireComponent(typeof(HealthComponent))]
     public class HealthText : MonoBehaviour
     {
         [SerializeField] private TextMeshPro text;
@@ -14,12 +14,12 @@ namespace Game.Health
         [SerializeField] private float fadeOutDuration = 2f;
         [SerializeField] private float showDuration = 3f;
 
-        private Health healthComponent;
+        private HealthComponent healthComponent;
         private Tween fadeTween;
 
         private void Awake()
         {
-            healthComponent = GetComponent<Health>();
+            healthComponent = GetComponent<HealthComponent>();
             healthComponent.HealthUpdatedEvent += OnHealthUpdated;
 
             FadeOutText();

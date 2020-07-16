@@ -111,6 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7464666f64a55448cdfe03d8a274cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 653239977657492621, guid: 375942608af566f4abd7e38adec070fd, type: 3}
+  prefab: {fileID: 5547144303670814959, guid: 7002941c1ecfa1f43b775b38cda64680, type: 3}
   inactiveSprite: {fileID: 21300000, guid: a691d915c6bb20c44a4ad2bafa38831e, type: 3}
   activatedSprite: {fileID: 21300000, guid: f0ea4f7f0cf958b46a4b279d6831689b, type: 3}

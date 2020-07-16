@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
-using Game.Characters.Movement;
 using Game.DI;
-using UnityEngine;
+using Game.Player;
 
 namespace Game.Health
 {
     [Injectable(Singleton = true)]
     public class DeathController
     {
-        private readonly List<Health> healthComponents = new List<Health>();
+        private readonly List<HealthComponent> healthComponents = new List<HealthComponent>();
 
         public event Action<PlayerController> PlayerDiedEvent;
 
-        public void RegisterHealthComponent(Health healthComponent)
+        public void RegisterHealthComponent(HealthComponent healthComponent)
         {
             if (healthComponents.Contains(healthComponent))
             {
@@ -24,7 +23,7 @@ namespace Game.Health
             healthComponents.Add(healthComponent);
         }
 
-        public void UnregisterHealthComponent(Health healthComponent)
+        public void UnregisterHealthComponent(HealthComponent healthComponent)
         {
             if (!healthComponents.Contains(healthComponent))
             {
@@ -35,7 +34,7 @@ namespace Game.Health
             healthComponents.Remove(healthComponent);
         }
 
-        private void OnHealthComponentKilled(Health healthComponent)
+        private void OnHealthComponentKilled(HealthComponent healthComponent)
         {
             PlayerController playerController = healthComponent.GetComponent<PlayerController>();
 

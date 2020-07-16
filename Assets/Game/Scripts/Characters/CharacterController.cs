@@ -1,24 +1,25 @@
 using Game.Characters.Animations;
+using Game.Characters.Movement;
 using Game.DI;
 using Game.UserInput;
 using UnityEngine;
 
-namespace Game.Characters.Movement
+namespace Game.Characters
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerController : DIBehaviour
+    public abstract class CharacterController : DIBehaviour
     {
         [SerializeField] private float movementAcceleration = 1f;
         [SerializeField] private float maxMovementSpeed = 10f;
         [SerializeField] private float jumpStrength = 5f;
-
-        [Inject] private PlayerInputController playerInput;
 
         private new Rigidbody2D rigidbody2D;
         private ActionState movementActionState = ActionState.Stop;
         private JumpMode jumpMode;
         private Vector2 movementVector;
         private CharacterAnimator characterAnimator;
+
+        protected MoveDirection moveDirection;
 
         protected override void Awake()
         {
@@ -27,19 +28,10 @@ namespace Game.Characters.Movement
             rigidbody2D = GetComponent<Rigidbody2D>();
             characterAnimator = GetComponent<CharacterAnimator>();
 
-            playerInput.ActionEvent += OnAction;
-
             characterAnimator.SetIdleMode();
         }
 
-        protected override void OnDestroy()
-        {
-            playerInput.ActionEvent -= OnAction;
-
-            base.OnDestroy();
-        }
-
-        private void Update()
+        protected virtual void Update()
         {
             if (movementActionState == ActionState.Stop && jumpMode == JumpMode.None)
             {
@@ -60,7 +52,7 @@ namespace Game.Characters.Movement
             characterAnimator.SetJumpSpeed(rigidbody2D.velocity.y);
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             if (movementActionState == ActionState.Stop)
             {
@@ -84,46 +76,7 @@ namespace Game.Characters.Movement
             jumpMode = JumpMode.None;
         }
 
-        private void OnAction(PlayerInputAction playerInputAction, ActionState actionState)
-        {
-            switch (playerInputAction)
-            {
-                case PlayerInputAction.MoveLeft:
-                    HandleMovement(actionState, MoveDirection.Left);
-                    break;
-
-                case PlayerInputAction.MoveRight:
-                    HandleMovement(actionState, MoveDirection.Right);
-                    break;
-
-                case PlayerInputAction.Jump:
-                    HandleJump(actionState);
-                    break;
-            }
-        }
-
-        private void HandleMovement(ActionState actionState, MoveDirection moveDirection)
-        {
-            switch (actionState)
-            {
-                case ActionState.Start:
-                    movementVector = GetMovementVector(moveDirection);
-                    break;
-                
-                case ActionState.Stop:
-                    movementVector = Vector2.zero;
-                    break;
-            }
-
-            movementActionState = actionState;
-
-            if (jumpMode == JumpMode.None)
-            {
-                characterAnimator.SetWalkMode();
-            }
-        }
-
-        private Vector3 GetMovementVector(MoveDirection moveDirection)
+        protected Vector3 GetMovementVector(MoveDirection moveDirection)
         {
             switch (moveDirection)
             {
@@ -137,7 +90,29 @@ namespace Game.Characters.Movement
             return Vector2.zero;
         }
 
-        private void HandleJump(ActionState actionState)
+        protected void HandleMovement(ActionState actionState, MoveDirection moveDirection)
+        {
+            switch (actionState)
+            {
+                case ActionState.Start:
+                    movementVector = GetMovementVector(moveDirection);
+                    break;
+                
+                case ActionState.Stop:
+                    movementVector = Vector2.zero;
+                    break;
+            }
+
+            movementActionState = actionState;
+            this.moveDirection = moveDirection;
+
+            if (jumpMode == JumpMode.None)
+            {
+                characterAnimator.SetWalkMode();
+            }
+        }
+
+        protected void HandleJump(ActionState actionState)
         {
             if (actionState == ActionState.Stop || jumpMode == JumpMode.DoubleJump)
             {

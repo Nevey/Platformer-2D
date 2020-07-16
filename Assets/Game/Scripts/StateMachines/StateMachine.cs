@@ -49,7 +49,7 @@ namespace Game.StateMachines
         /// <param name="catchException"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private State GetState<T>(bool catchException = false)
+        protected State GetState<T>(bool catchException = false)
             where T : State, new()
         {
             Type type = typeof(T);

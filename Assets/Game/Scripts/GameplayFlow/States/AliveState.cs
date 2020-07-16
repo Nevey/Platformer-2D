@@ -1,7 +1,7 @@
 ﻿using Game.Cameras;
-using Game.Characters.Movement;
 using Game.DI;
 using Game.Health;
+using Game.Player;
 using Game.StateMachines;
 using UnityEngine;
 
