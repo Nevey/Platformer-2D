@@ -4,6 +4,7 @@ namespace Game.Characters.Movement
     {
         None,
         SingleJump,
-        DoubleJump
+        DoubleJump,
+        Fall
     }
 }

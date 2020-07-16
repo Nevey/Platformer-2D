@@ -1,12 +1,16 @@
+using System.Collections;
 using Game.Characters.Animations;
 using Game.Characters.Movement;
 using Game.DI;
 using Game.UserInput;
+using Game.Utils;
 using UnityEngine;
 
 namespace Game.Characters
 {
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(CharacterAnimator))]
     public abstract class CharacterController : DIBehaviour
     {
         [SerializeField] private float movementAcceleration = 1f;
@@ -14,10 +18,12 @@ namespace Game.Characters
         [SerializeField] private float jumpStrength = 5f;
 
         private new Rigidbody2D rigidbody2D;
+        private new Collider2D collider2D;
+        private CharacterAnimator characterAnimator;
+
         private ActionState movementActionState = ActionState.Stop;
         private JumpMode jumpMode;
         private Vector2 movementVector;
-        private CharacterAnimator characterAnimator;
 
         protected MoveDirection moveDirection;
 
@@ -26,6 +32,7 @@ namespace Game.Characters
             base.Awake();
 
             rigidbody2D = GetComponent<Rigidbody2D>();
+            collider2D = GetComponent<Collider2D>();
             characterAnimator = GetComponent<CharacterAnimator>();
 
             characterAnimator.SetIdleMode();
@@ -54,26 +61,58 @@ namespace Game.Characters
 
         protected virtual void FixedUpdate()
         {
+            LayerMask mask = LayerMask.GetMask("Ground", "Characters");
+            CapsuleCollider2D capsuleCollider2D = (CapsuleCollider2D)collider2D;
+            RaycastHit2D[] hits = Physics2D.CapsuleCastAll(transform.position, capsuleCollider2D.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.3f, mask);
+            HandleHits(hits);
+
             if (movementActionState == ActionState.Stop)
             {
                 return;
             }
 
-            Vector2 force = movementVector * movementAcceleration;
+            float acceleration = movementAcceleration;
+
+            if (jumpMode != JumpMode.None)
+            {
+                acceleration *= 0.15f;
+            }
+
+            Vector2 force = movementVector * acceleration;
             Vector2 velocity = rigidbody2D.velocity + force;
             velocity.x = Mathf.Clamp(velocity.x, -maxMovementSpeed, maxMovementSpeed);
             rigidbody2D.velocity = velocity;
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void HandleHits(RaycastHit2D[] hits)
         {
-            // Check if we're colliding with ground layer
-            if (other.gameObject.layer != 8)
+            if (hits.Length == 1 && jumpMode == JumpMode.None)
             {
+                characterAnimator.SetJumpMode();
+                jumpMode = JumpMode.Fall;
+
                 return;
             }
 
-            jumpMode = JumpMode.None;
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].transform == transform)
+                {
+                    continue;
+                }
+
+                Debug.DrawRay(hits[i].point, hits[i].normal, Color.red, 5f);
+
+                float angle = Vector2.Angle(hits[i].normal, Vector2.up);
+
+                if (Mathf.Abs(angle) > 45f)
+                {
+                    continue;
+                }
+
+                jumpMode = JumpMode.None;
+                break;
+            }
         }
 
         protected Vector3 GetMovementVector(MoveDirection moveDirection)
@@ -124,6 +163,10 @@ namespace Game.Characters
             if ((int)jumpMode < (int)JumpMode.DoubleJump)
             {
                 jumpMode++;
+            }
+            else if (jumpMode == JumpMode.Fall)
+            {
+                jumpMode = JumpMode.DoubleJump;
             }
 
             characterAnimator.SetJumpMode();

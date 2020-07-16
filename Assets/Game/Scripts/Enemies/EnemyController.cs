@@ -43,11 +43,14 @@ namespace Game.Enemies
 
         private void ScanForWall()
         {
+            Vector2 scanPosition = transform.position;
+            scanPosition.y -= 0.25f;
+
             Vector2 scanDirection = new Vector2(GetMovementVector(moveDirection).x, 0f);
 
-            Debug.DrawRay(transform.position, scanDirection, Color.cyan, 0.5f);
+            Debug.DrawRay(scanPosition, scanDirection, Color.cyan, 0.5f);
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, scanDirection, 1f, 1 << 8);
+            RaycastHit2D hit = Physics2D.Raycast(scanPosition, scanDirection, 1f, 1 << 8);
 
             if (hit)
             {
