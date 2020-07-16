@@ -14,6 +14,7 @@ namespace Game.Enemies
 
         public event Action MovementStartedEvent;
         public event Action NoGroundFoundEvent;
+        public event Action WallFoundEvent;
 
         private Coroutine routine;
 
@@ -22,13 +23,14 @@ namespace Game.Enemies
             base.Update();
 
             ScanForGround();
+            ScanForWall();
         }
 
         private void ScanForGround()
         {
             Vector2 scanDirection = new Vector2(GetMovementVector(moveDirection).x, -1f);
 
-            Debug.DrawRay(transform.position, scanDirection, Color.blue, 0.5f);
+            Debug.DrawRay(transform.position, scanDirection, Color.cyan, 0.5f);
 
             // Find the ground in front of my feet!
             RaycastHit2D hit = Physics2D.Raycast(transform.position, scanDirection, 1f, 1 << 8);
@@ -36,6 +38,20 @@ namespace Game.Enemies
             if (!hit)
             {
                 NoGroundFoundEvent?.Invoke();
+            }
+        }
+
+        private void ScanForWall()
+        {
+            Vector2 scanDirection = new Vector2(GetMovementVector(moveDirection).x, 0f);
+
+            Debug.DrawRay(transform.position, scanDirection, Color.cyan, 0.5f);
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, scanDirection, 1f, 1 << 8);
+
+            if (hit)
+            {
+                WallFoundEvent?.Invoke();
             }
         }
 

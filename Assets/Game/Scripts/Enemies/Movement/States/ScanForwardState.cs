@@ -1,3 +1,4 @@
+using System;
 using Game.StateMachines;
 
 namespace Game.Enemies.Movement.States
@@ -11,18 +12,19 @@ namespace Game.Enemies.Movement.States
             EnemyMovementStateMachine movementStateMachine = (EnemyMovementStateMachine)owner;
             enemyController = movementStateMachine.EnemyController;
 
-            enemyController.NoGroundFoundEvent += OnNoGroundFound;
+            enemyController.NoGroundFoundEvent += StopMovement;
+            enemyController.WallFoundEvent += StopMovement;
         }
 
         protected override void OnExit()
         {
-            enemyController.NoGroundFoundEvent -= OnNoGroundFound;
+            enemyController.NoGroundFoundEvent -= StopMovement;
+            enemyController.WallFoundEvent -= StopMovement;
         }
 
-        private void OnNoGroundFound()
+        private void StopMovement()
         {
             enemyController.StopMovement();
-
             owner.ToNextState();
         }
     }
