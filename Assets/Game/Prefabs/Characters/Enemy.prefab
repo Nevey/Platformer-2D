@@ -100,6 +100,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3692783779853237474, guid: 375942608af566f4abd7e38adec070fd,
+        type: 3}
+      propertyPath: startHealth
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 7605959626019155019, guid: 375942608af566f4abd7e38adec070fd,
         type: 3}
       propertyPath: walkSpeedMultiplier

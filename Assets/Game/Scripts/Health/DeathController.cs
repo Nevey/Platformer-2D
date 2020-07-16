@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Game.DI;
 using Game.Player;
+using UnityEngine;
 
 namespace Game.Health
 {
@@ -36,6 +37,8 @@ namespace Game.Health
 
         private void OnHealthComponentKilled(HealthComponent healthComponent)
         {
+            MonoBehaviour.Destroy(healthComponent.gameObject);
+
             PlayerController playerController = healthComponent.GetComponent<PlayerController>();
 
             if (playerController == null)

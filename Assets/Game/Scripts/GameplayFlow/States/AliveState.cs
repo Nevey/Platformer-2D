@@ -3,7 +3,6 @@ using Game.DI;
 using Game.Health;
 using Game.Player;
 using Game.StateMachines;
-using UnityEngine;
 
 namespace Game.GameplayFlow.States
 {
@@ -27,8 +26,6 @@ namespace Game.GameplayFlow.States
             deathController.PlayerDiedEvent -= OnPlayerDied;
 
             cameraFollowTarget.UnassignTarget();
-
-            MonoBehaviour.Destroy(playerController.gameObject);
 
             owner.ToNextState();
         }
