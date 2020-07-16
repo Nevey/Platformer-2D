@@ -99,6 +99,31 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3692783779853237474, guid: 375942608af566f4abd7e38adec070fd,
+        type: 3}
+      propertyPath: startHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442246618761510948, guid: 375942608af566f4abd7e38adec070fd,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442246618761510948, guid: 375942608af566f4abd7e38adec070fd,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.990566
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442246618761510948, guid: 375942608af566f4abd7e38adec070fd,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.40523162
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442246618761510948, guid: 375942608af566f4abd7e38adec070fd,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4285005056
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 375942608af566f4abd7e38adec070fd, type: 3}
 --- !u!1 &5547144303670814959 stripped

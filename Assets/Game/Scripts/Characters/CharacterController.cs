@@ -59,6 +59,7 @@ namespace Game.Characters
 
         protected virtual void FixedUpdate()
         {
+            // TODO: Check if it's better to use "OnCollisionStay"
             CheckForGroundHit();
 
             if (movementActionState == ActionState.Stop)

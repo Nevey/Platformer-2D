@@ -44,7 +44,7 @@ namespace Game.UI
 
             visibleState = VisibleState.Hidden;
 
-            gameObject?.SetActive(false);
+            gameObject.SetActive(false);
             OnHide();
         }
     }
