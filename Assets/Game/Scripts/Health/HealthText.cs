@@ -15,6 +15,7 @@ namespace Game.Health
         [SerializeField] private float showDuration = 3f;
 
         private Health healthComponent;
+        private Tween fadeTween;
 
         private void Awake()
         {
@@ -36,7 +37,9 @@ namespace Game.Health
                 CancelInvoke(nameof(FadeOutText));
             }
 
-            text.DOFade(1f, fadeInDuration);
+            fadeTween?.Kill();
+            fadeTween = text.DOFade(1f, fadeInDuration);
+
             text.SetText(health.ToString());
 
             Invoke(nameof(FadeOutText), showDuration);
@@ -44,7 +47,7 @@ namespace Game.Health
 
         private void FadeOutText()
         {
-            text.DOFade(0f, fadeOutDuration);
+            fadeTween = text.DOFade(0f, fadeOutDuration);
         }
     }
 }
