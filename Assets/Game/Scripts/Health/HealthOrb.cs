@@ -1,40 +1,32 @@
 using Game.Collectibles;
-using Game.DI;
 using UnityEngine;
 
-namespace Game.Doors.Keys
+namespace Game.Health
 {
     [RequireComponent(typeof(Collectible))]
-    public class Key : DIBehaviour
+    public class HealthOrb : MonoBehaviour
     {
-        [SerializeField] private DoorType doorType;
-
-        [Inject] private KeyStorage keyStorage;
+        [SerializeField] private int healthValue = 1;
 
         private Collectible collectible;
 
-        public DoorType DoorType => doorType;
-
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-
             collectible = GetComponent<Collectible>();
             collectible.CollectedEvent += OnCollected;
         }
 
-        protected override void OnDestroy()
+        private void OnDestroy()
         {
             collectible.CollectedEvent -= OnCollected;
-
-            base.OnDestroy();
         }
 
         private void OnCollected(Collectible collectible, Transform collecter)
         {
             collectible.CollectedEvent -= OnCollected;
 
-            keyStorage.CollectKey(this);
+            HealthComponent healthComponent = collecter.GetComponent<HealthComponent>();
+            healthComponent?.UpdateHealth(healthValue);
         }
     }
 }

@@ -35,7 +35,8 @@ namespace Game.Enemies
             // Find the ground in front of my feet!
             RaycastHit2D hit = Physics2D.Raycast(transform.position, scanDirection, 1f, 1 << 8);
 
-            if (!hit)
+            // TODO: Make this check more scalable
+            if (!hit || hit && (hit.transform.tag.Equals("Trap") || hit.transform.tag.Equals("Trampoline")))
             {
                 NoGroundFoundEvent?.Invoke();
             }

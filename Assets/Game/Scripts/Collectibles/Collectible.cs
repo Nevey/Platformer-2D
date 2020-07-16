@@ -25,7 +25,7 @@ namespace Game.Collectibles
         private CollectMode collectMode;
         private Transform target;
 
-        public event Action<Collectible> CollectedEvent;
+        public event Action<Collectible, Transform> CollectedEvent;
 
         private void Awake()
         {
@@ -49,7 +49,7 @@ namespace Game.Collectibles
             {
                 collectMode = CollectMode.Collected;
 
-                CollectedEvent?.Invoke(this);
+                CollectedEvent?.Invoke(this, target);
 
                 if (destroyOnCollect)
                 {
@@ -71,7 +71,7 @@ namespace Game.Collectibles
 
             if (scaleDuringCollect)
             {
-                transform.DOScale(1.5f, 1f).SetEase(Ease.OutElastic);
+                transform.DOScale(1.5f, 2f).SetEase(Ease.OutElastic);
             }
         }
     }
