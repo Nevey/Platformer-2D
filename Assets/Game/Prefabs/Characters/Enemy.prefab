@@ -100,6 +100,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7605959626019155019, guid: 375942608af566f4abd7e38adec070fd,
+        type: 3}
+      propertyPath: walkSpeedMultiplier
+      value: 0.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 375942608af566f4abd7e38adec070fd, type: 3}
 --- !u!1 &2843490709777401077 stripped
