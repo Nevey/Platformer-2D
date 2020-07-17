@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementAcceleration: 1
   maxMovementSpeed: 4
-  jumpStrength: 3.3
+  jumpStrength: 3.5
 --- !u!114 &1015057525428532564
 MonoBehaviour:
   m_ObjectHideFlags: 0
