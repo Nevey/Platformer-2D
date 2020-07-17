@@ -24,6 +24,9 @@ namespace Game.UserInput
 
             jumpButton.PressedEvent += OnButtonDown;
             jumpButton.ReleasedEvent += OnButtonReleased;
+
+            shootButton.PressedEvent += OnButtonDown;
+            shootButton.ReleasedEvent += OnButtonReleased;
         }
 
         private void OnDestroy()
@@ -36,6 +39,9 @@ namespace Game.UserInput
 
             jumpButton.PressedEvent -= OnButtonDown;
             jumpButton.ReleasedEvent -= OnButtonReleased;
+
+            shootButton.PressedEvent -= OnButtonDown;
+            shootButton.ReleasedEvent -= OnButtonReleased;
         }
 
         #if UNITY_EDITOR
