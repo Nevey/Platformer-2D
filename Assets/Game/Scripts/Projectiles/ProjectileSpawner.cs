@@ -15,9 +15,9 @@ namespace Game.Projectiles
 
         protected abstract Vector2 GetSpawnDirectionNormalized();
 
-        public override GameObject Spawn()
+        public override GameObject Spawn(bool ignoreCollisionWithSpawnerOwner = true)
         {
-            GameObject instance = base.Spawn();
+            GameObject instance = base.Spawn(ignoreCollisionWithSpawnerOwner);
 
             Projectile projectileInstance = instance.GetComponent<Projectile>();
 

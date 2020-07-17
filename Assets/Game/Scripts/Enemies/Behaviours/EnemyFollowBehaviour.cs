@@ -1,5 +1,4 @@
 using Game.Characters.Movement;
-using Game.Utils;
 using UnityEngine;
 
 namespace Game.Enemies.Behaviours
@@ -52,7 +51,7 @@ namespace Game.Enemies.Behaviours
             moveDirection = newMoveDirection;
         }
 
-        public bool FollowTarget()
+        public bool StartFollow()
         {
             if (!enemyTargetBehaviour.HasTarget)
             {

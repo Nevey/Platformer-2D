@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 195957947396745509}
   - component: {fileID: 1568462454700593881}
-  - component: {fileID: 6756522316301400461}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -26,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8925429463342351710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.191, y: 0.039, z: 0}
+  m_LocalScale: {x: 0.29149, y: 0.29149, z: 0.29149}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -82,18 +81,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6756522316301400461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8925429463342351710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3197dc86a75e0a40a0ceb8996b96e5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 4339806035667313249, guid: 0f3605f5a297ef4428aa36537745991e, type: 3}
-  relativeSpawnPoint: {x: 0, y: 0}
-  spawnForce: 5

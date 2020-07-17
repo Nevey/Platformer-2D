@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3692783779853237474}
   - component: {fileID: 3158152851126699778}
   - component: {fileID: -5404790059608002871}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: Character
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 792546345122340215}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: HandContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582520778233768162}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.121, y: -0.307, z: 0}
+  m_LocalPosition: {x: 0.093, y: -0.022, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 653239977657492618}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 2718564768743417286}
   - component: {fileID: 3609338312690975454}
   - component: {fileID: 8442246618761510948}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

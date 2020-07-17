@@ -9,6 +9,7 @@ namespace Game.Spawning
     {
         [SerializeField] private GameObject prefab;
         [SerializeField] private Vector2 relativeSpawnPoint;
+        [SerializeField] protected Transform owner;
 
         public event Action<Spawner> SpawnedEvent;
 
@@ -23,18 +24,22 @@ namespace Game.Spawning
 
         private Vector2 GetSpawnPosition()
         {
-            Vector3 p = RotationUtil.GetVectorSimple(0f, transform.eulerAngles.y, 0f, relativeSpawnPoint);
-            p.x += transform.position.x;
-            p.y += transform.position.y;
-            p.z = 0f;
+            Vector2 spawnPosition = RotationUtil.GetVectorSimple(0f, transform.eulerAngles.y, 0f, relativeSpawnPoint);
+            spawnPosition.x += transform.position.x;
+            spawnPosition.y += transform.position.y;
 
-            return p;
+            return spawnPosition;
         }
 
-        public virtual GameObject Spawn()
+        public virtual GameObject Spawn(bool ignoreCollisionWithSpawnerOwner = false)
         {
             GameObject instance = Instantiate(prefab, GetSpawnPosition(), Quaternion.identity);
             SpawnedEvent?.Invoke(this);
+
+            if (ignoreCollisionWithSpawnerOwner)
+            {
+                IgnoreCollisionsUtil.IgnoreAllCollisions(owner.gameObject, instance);
+            }
 
             return instance;
         }
