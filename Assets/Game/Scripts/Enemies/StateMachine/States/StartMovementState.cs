@@ -1,7 +1,7 @@
 ﻿using Game.Characters.Movement;
 using Game.StateMachines;
 
-namespace Game.Enemies.Movement.States
+namespace Game.Enemies.StateMachines.States
 {
     public class StartMovementState : State
     {
@@ -10,7 +10,7 @@ namespace Game.Enemies.Movement.States
 
         protected override void OnEnter()
         {
-            EnemyMovementStateMachine movementStateMachine = (EnemyMovementStateMachine)owner;
+            EnemyStateMachine movementStateMachine = (EnemyStateMachine)owner;
             enemyController = movementStateMachine.EnemyController;
 
             RevertMoveDirection();

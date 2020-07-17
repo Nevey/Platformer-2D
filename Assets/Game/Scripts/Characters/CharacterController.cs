@@ -120,7 +120,7 @@ namespace Game.Characters
                     continue;
                 }
 
-                Debug.DrawRay(hits[i].point, hits[i].normal, Color.red, 5f);
+                Debug.DrawRay(hits[i].point, hits[i].normal, Color.red, 0.5f);
 
                 float angle = Vector2.Angle(hits[i].normal, Vector2.up);
 
@@ -152,6 +152,7 @@ namespace Game.Characters
 
             movementActionState = actionState;
 
+            // Swap our whatever we're holding to point in the correct direction
             if (moveDirection != newMoveDirection)
             {
                 Vector2 handContainerPosition = handContainer.localPosition;
@@ -167,7 +168,7 @@ namespace Game.Characters
 
             moveDirection = newMoveDirection;
 
-            if (jumpMode == JumpMode.None)
+            if (movementVector == Vector2.zero && jumpMode == JumpMode.None)
             {
                 physicsMaterialSwapper.RevertSwap();
                 characterAnimator.SetWalkMode();
