@@ -17,6 +17,7 @@ namespace Game.Characters
         [SerializeField] private float movementAcceleration = 1f;
         [SerializeField] private float maxMovementSpeed = 10f;
         [SerializeField] private float jumpStrength = 5f;
+        [SerializeField] private float doubleJumpStrength = 2.5f;
         [SerializeField] private Transform handContainer;
 
         private new Rigidbody2D rigidbody2D;
@@ -182,7 +183,10 @@ namespace Game.Characters
                 return;
             }
 
-            rigidbody2D.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
+            // If current jump mode is already in Fall, we're gonna apply the double jump!
+            float strength = jumpMode == JumpMode.Fall ? doubleJumpStrength : jumpStrength;
+
+            rigidbody2D.AddForce(Vector2.up * strength, ForceMode2D.Impulse);
 
             if ((int)jumpMode < (int)JumpMode.DoubleJump)
             {

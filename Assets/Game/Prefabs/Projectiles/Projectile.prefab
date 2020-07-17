@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instaKill: 0
-  damage: 3
+  damage: 25
 --- !u!114 &5953426653935603694
 MonoBehaviour:
   m_ObjectHideFlags: 0

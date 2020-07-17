@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementAcceleration: 1
   maxMovementSpeed: 4
-  jumpStrength: 3.5
+  jumpStrength: 3.75
+  doubleJumpStrength: 2
   handContainer: {fileID: 5698210925513249045}
 --- !u!114 &1015057525428532564
 MonoBehaviour:
@@ -108,7 +109,7 @@ PrefabInstance:
     - target: {fileID: 3692783779853237474, guid: 375942608af566f4abd7e38adec070fd,
         type: 3}
       propertyPath: startHealth
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8442246618761510948, guid: 375942608af566f4abd7e38adec070fd,
         type: 3}
