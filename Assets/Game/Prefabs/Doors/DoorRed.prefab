@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 892515544580114809, guid: 442f31b777612a64595874d8958d94c1,
+        type: 3}
+      propertyPath: doorType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4630790505024396603, guid: 442f31b777612a64595874d8958d94c1,
         type: 3}
       propertyPath: m_Sprite

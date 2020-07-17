@@ -1,5 +1,6 @@
 using Game.Characters.Animations;
 using Game.Characters.Movement;
+using Game.Characters.Physics;
 using Game.DI;
 using Game.UserInput;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Game.Characters
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(CapsuleCollider2D))]
     [RequireComponent(typeof(CharacterAnimator))]
+    [RequireComponent(typeof(PhysicsMaterialSwapper))]
     public abstract class CharacterController : DIBehaviour
     {
         [SerializeField] private float movementAcceleration = 1f;
@@ -18,6 +20,7 @@ namespace Game.Characters
         private new Rigidbody2D rigidbody2D;
         private CapsuleCollider2D capsuleCollider2D;
         private CharacterAnimator characterAnimator;
+        private PhysicsMaterialSwapper physicsMaterialSwapper;
 
         private ActionState movementActionState = ActionState.Stop;
         private JumpMode jumpMode;
@@ -32,6 +35,7 @@ namespace Game.Characters
             rigidbody2D = GetComponent<Rigidbody2D>();
             capsuleCollider2D = GetComponent<CapsuleCollider2D>();
             characterAnimator = GetComponent<CharacterAnimator>();
+            physicsMaterialSwapper = GetComponent<PhysicsMaterialSwapper>();
 
             characterAnimator.SetIdleMode();
         }
@@ -42,6 +46,7 @@ namespace Game.Characters
             {
                 if (rigidbody2D.velocity == Vector2.zero)
                 {
+                    physicsMaterialSwapper.RevertSwap();
                     characterAnimator.SetIdleMode();
                 }
 
@@ -50,6 +55,7 @@ namespace Game.Characters
 
             if (jumpMode == JumpMode.None)
             {
+                physicsMaterialSwapper.RevertSwap();
                 characterAnimator.SetWalkMode();
             }
 
@@ -87,7 +93,9 @@ namespace Game.Characters
 
             if (hits.Length == 1 && jumpMode == JumpMode.None)
             {
+                physicsMaterialSwapper.Swap();
                 characterAnimator.SetJumpMode();
+
                 jumpMode = JumpMode.Fall;
 
                 return;
@@ -109,7 +117,10 @@ namespace Game.Characters
                     continue;
                 }
 
+
+                physicsMaterialSwapper.RevertSwap();
                 jumpMode = JumpMode.None;
+
                 break;
             }
         }
@@ -146,6 +157,7 @@ namespace Game.Characters
 
             if (jumpMode == JumpMode.None)
             {
+                physicsMaterialSwapper.RevertSwap();
                 characterAnimator.SetWalkMode();
             }
         }
@@ -168,6 +180,7 @@ namespace Game.Characters
                 jumpMode = JumpMode.DoubleJump;
             }
 
+            physicsMaterialSwapper.Swap();
             characterAnimator.SetJumpMode();
         }
     }
