@@ -1,3 +1,4 @@
+using System;
 using Game.Characters.Animations;
 using Game.Characters.Movement;
 using Game.Characters.Physics;
@@ -16,6 +17,7 @@ namespace Game.Characters
         [SerializeField] private float movementAcceleration = 1f;
         [SerializeField] private float maxMovementSpeed = 10f;
         [SerializeField] private float jumpStrength = 5f;
+        [SerializeField] private Transform handContainer;
 
         private new Rigidbody2D rigidbody2D;
         private CapsuleCollider2D capsuleCollider2D;
@@ -28,6 +30,10 @@ namespace Game.Characters
 
         protected MoveDirection moveDirection;
 
+        public MoveDirection MoveDirection => moveDirection;
+
+        public event Action<MoveDirection> MoveDirectionUpdatedEvent;
+
         protected override void Awake()
         {
             base.Awake();
@@ -38,6 +44,12 @@ namespace Game.Characters
             physicsMaterialSwapper = GetComponent<PhysicsMaterialSwapper>();
 
             characterAnimator.SetIdleMode();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            MoveDirectionUpdatedEvent?.Invoke(moveDirection);
         }
 
         protected virtual void Update()
@@ -125,26 +137,12 @@ namespace Game.Characters
             }
         }
 
-        protected Vector3 GetMovementVector(MoveDirection moveDirection)
-        {
-            switch (moveDirection)
-            {
-                case MoveDirection.Left:
-                    return Vector2.left;
-                
-                case MoveDirection.Right:
-                    return Vector2.right;
-            }
-
-            return Vector2.zero;
-        }
-
-        protected void HandleMovement(ActionState actionState, MoveDirection moveDirection)
+        protected void HandleMovement(ActionState actionState, MoveDirection newMoveDirection)
         {
             switch (actionState)
             {
                 case ActionState.Start:
-                    movementVector = GetMovementVector(moveDirection);
+                    movementVector = newMoveDirection.GetVectorNormalized();
                     break;
                 
                 case ActionState.Stop:
@@ -153,7 +151,21 @@ namespace Game.Characters
             }
 
             movementActionState = actionState;
-            this.moveDirection = moveDirection;
+
+            if (moveDirection != newMoveDirection)
+            {
+                Vector2 handContainerPosition = handContainer.localPosition;
+                handContainerPosition.x *= -1;
+                handContainer.localPosition = handContainerPosition;
+
+                Vector2 handContainerRotation = Vector2.zero;
+                handContainerRotation.y = newMoveDirection == MoveDirection.Right ? 0 : 180;
+                handContainer.localEulerAngles = handContainerRotation;
+
+                MoveDirectionUpdatedEvent?.Invoke(newMoveDirection);
+            }
+
+            moveDirection = newMoveDirection;
 
             if (jumpMode == JumpMode.None)
             {

@@ -4,7 +4,8 @@ namespace Game.UserInput
     {
         MoveLeft,
         MoveRight,
-        Jump
+        Jump,
+        Shoot
     }
 
     public enum ActionState

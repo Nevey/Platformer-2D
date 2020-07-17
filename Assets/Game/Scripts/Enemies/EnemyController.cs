@@ -28,7 +28,7 @@ namespace Game.Enemies
 
         private void ScanForGround()
         {
-            Vector2 scanDirection = new Vector2(GetMovementVector(moveDirection).x, -1f);
+            Vector2 scanDirection = new Vector2(moveDirection.GetVectorNormalized().x, -1f);
 
             Debug.DrawRay(transform.position, scanDirection, Color.cyan, 0.5f);
 
@@ -47,7 +47,7 @@ namespace Game.Enemies
             Vector2 scanPosition = transform.position;
             scanPosition.y -= 0.25f;
 
-            Vector2 scanDirection = new Vector2(GetMovementVector(moveDirection).x, 0f);
+            Vector2 scanDirection = new Vector2(moveDirection.GetVectorNormalized().x, 0f);
 
             Debug.DrawRay(scanPosition, scanDirection, Color.cyan, 0.5f);
 

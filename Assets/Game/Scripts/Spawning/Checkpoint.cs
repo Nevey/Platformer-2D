@@ -16,8 +16,10 @@ namespace Game.Spawning
 
         public event Action<Checkpoint> CheckpointActivatedEvent;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             circleCollider2D = GetComponent<CircleCollider2D>();
             circleCollider2D.isTrigger = true;
 

@@ -27,6 +27,7 @@ MonoBehaviour:
   movementAcceleration: 1
   maxMovementSpeed: 3
   jumpStrength: 2.5
+  handContainer: {fileID: 2637259195395685647}
   delayInSeconds: 0
 --- !u!1001 &3343603797761728632
 PrefabInstance:
@@ -155,6 +156,12 @@ PrefabInstance:
 --- !u!1 &2843490709777401077 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 653239977657492621, guid: 375942608af566f4abd7e38adec070fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 3343603797761728632}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2637259195395685647 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 792546345122340215, guid: 375942608af566f4abd7e38adec070fd,
     type: 3}
   m_PrefabInstance: {fileID: 3343603797761728632}
   m_PrefabAsset: {fileID: 0}

@@ -10,6 +10,7 @@ namespace Game.UserInput
         [SerializeField] private PlayerInputButton leftButton;
         [SerializeField] private PlayerInputButton rightButton;
         [SerializeField] private PlayerInputButton jumpButton;
+        [SerializeField] private PlayerInputButton shootButton;
 
         public event Action<PlayerInputAction, ActionState> ActionEvent;
 
@@ -68,6 +69,16 @@ namespace Game.UserInput
             if (Input.GetKeyUp(KeyCode.D))
             {
                 OnButtonReleased(PlayerInputAction.MoveRight);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                OnButtonDown(PlayerInputAction.Shoot);
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                OnButtonReleased(PlayerInputAction.Shoot);
             }
         }
         #endif
