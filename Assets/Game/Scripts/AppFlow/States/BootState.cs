@@ -25,7 +25,7 @@ namespace Game.AppFlow.States
         private void UnloadAllScenesFinished()
         {
             // Load UI Scene
-            sceneLoader.LoadScenes(OnMainScenesLoaded, "UI");
+            sceneLoader.LoadScenes(OnMainScenesLoaded, true, "UI");
         }
 
         private void OnMainScenesLoaded()

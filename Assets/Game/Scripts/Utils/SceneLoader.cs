@@ -15,6 +15,8 @@ namespace Game.Utils
         private Action loadingFinishedCallback;
         private Action unloadFinishedCallback;
 
+        private string sceneNameToSetActive;
+
         public SceneLoader()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -27,15 +29,20 @@ namespace Game.Utils
             SceneManager.sceneUnloaded -= OnSceneUnloaded;
         }
 
-        private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            loadingScenes.Remove(arg0.name);
+            loadingScenes.Remove(scene.name);
             CheckForLoadingFinished();
+
+            if (sceneNameToSetActive == scene.name)
+            {
+                SceneManager.SetActiveScene(scene);
+            }
         }
 
-        private void OnSceneUnloaded(Scene arg0)
+        private void OnSceneUnloaded(Scene scene)
         {
-            unloadingScenes.Remove(arg0.name);
+            unloadingScenes.Remove(scene.name);
             CheckForUnloadingFinished();
         }
 
@@ -72,18 +79,20 @@ namespace Game.Utils
             callback = null;
         }
 
-        public void LoadScenes(params string[] sceneNames)
+        public void LoadScenes(bool setFirstSceneAsActive, params string[] sceneNames)
         {
+            sceneNameToSetActive = setFirstSceneAsActive ? sceneNames[0] : null;
+
             for (int i = 0; i < sceneNames.Length; i++)
             {
                 LoadScene(sceneNames[i], LoadSceneMode.Additive);
             }
         }
 
-        public void LoadScenes(Action callback, params string[] sceneNames)
+        public void LoadScenes(Action callback, bool setFirstSceneAsActive, params string[] sceneNames)
         {
             loadingFinishedCallback = callback;
-            LoadScenes(sceneNames);
+            LoadScenes(setFirstSceneAsActive, sceneNames);
         }
 
         public void UnloadScenes(params string[] sceneNames)

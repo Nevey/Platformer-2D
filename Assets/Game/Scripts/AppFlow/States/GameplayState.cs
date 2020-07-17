@@ -10,14 +10,14 @@ namespace Game.AppFlow.States
     {
         [Inject] private SceneLoader sceneLoader;
         [Inject] private UIController uiController;
-        
+
         private GameplayScreen gameplayScreen;
 
         protected override void OnEnter()
         {
             gameplayScreen = uiController.ShowScreen<GameplayScreen>();
 
-            sceneLoader.LoadScenes("Gameplay");
+            sceneLoader.LoadScenes(true, "Gameplay");
         }
 
         protected override void OnExit()
