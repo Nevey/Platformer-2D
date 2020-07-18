@@ -1,29 +1,53 @@
+using Game.DI;
+using Game.Enemies.Behaviours;
+using Game.GameplayFlow;
 using UnityEngine;
 
 namespace Game.Enemies
 {
     [RequireComponent(typeof(EnemyController))]
-    public class EnemyStateMachineWrapper : MonoBehaviour
+    public class EnemyStateMachineWrapper : DIBehaviour
     {
-        private EnemyController enemyController;
+        [Inject] private GameOverController gameOverController;
 
+        private EnemyController enemyController;
         private StateMachines.EnemyStateMachine enemyStateMachine = new StateMachines.EnemyStateMachine();
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
+            gameOverController.WinEvent += OnWin;
+
             enemyController = GetComponent<EnemyController>();
 
             enemyStateMachine.SetEnemyController(enemyController);
         }
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+
             enemyStateMachine.Start();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
+        {
+            gameOverController.WinEvent -= OnWin;
+
+            enemyStateMachine.Stop();
+
+            base.OnDestroy();
+        }
+
+        private void OnWin()
         {
             enemyStateMachine.Stop();
+
+            // TODO: Create central place or better approach where we can stop all enemy behaviours at once
+            enemyController.StopMovement();
+            enemyController.GetComponent<EnemyFollowBehaviour>().StopFollow();
+            enemyController.GetComponent<EnemyAttackBehaviour>().StopAttack();
         }
     }
 }

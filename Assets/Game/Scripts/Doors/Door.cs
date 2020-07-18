@@ -15,7 +15,7 @@ namespace Game.Doors
 
         private bool isUnlocked;
 
-        private void OnTriggerEnter2D(Collider2D other)
+        protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.tag.Equals("Player"))
             {
@@ -30,7 +30,7 @@ namespace Game.Doors
             }
         }
 
-        private void Unlock()
+        protected virtual void Unlock()
         {
             if (isUnlocked)
             {
@@ -47,7 +47,9 @@ namespace Game.Doors
             Vector2 targetPosition = transform.position;
             targetPosition.y -= unlockMovementDistance;
 
-            transform.DOMove(targetPosition, unlockAnimationDuration);
+            transform.DOMove(targetPosition, unlockAnimationDuration).OnComplete(OnUnlockAnimationFinished);
         }
+
+        protected virtual void OnUnlockAnimationFinished() { }
     }
 }
