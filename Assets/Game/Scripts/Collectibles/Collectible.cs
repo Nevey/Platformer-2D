@@ -35,6 +35,12 @@ namespace Game.Collectibles
 
         private void Update()
         {
+            if (target == null)
+            {
+                collectMode = CollectMode.Collected;
+                return;
+            }
+
             if (collectMode != CollectMode.MovingToTarget)
             {
                 return;

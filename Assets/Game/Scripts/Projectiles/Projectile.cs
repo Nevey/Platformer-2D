@@ -8,37 +8,39 @@ namespace Game.Projectiles
     [RequireComponent(typeof(Damager))]
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] private bool mayBounceOnGround;
-        [SerializeField] private float lifeSpawn = 2f;
+        [SerializeField] private float lifeSpan = 1f;
 
         private CircleCollider2D circleCollider2D;
-        private int currentBounceCount;
+        private Damager damager;
         private float currentBouncelessLifespan;
 
         private void Awake()
         {
             circleCollider2D = GetComponent<CircleCollider2D>();
             circleCollider2D.isTrigger = false;
+
+            damager = GetComponent<Damager>();
+            damager.DamageDoneEvent += OnDamageDone;
+        }
+
+        private void OnDestroy()
+        {
+            damager.DamageDoneEvent -= OnDamageDone;
         }
 
         private void Update()
         {
             currentBouncelessLifespan += Time.deltaTime;
 
-            if (currentBouncelessLifespan > lifeSpawn)
+            if (currentBouncelessLifespan > lifeSpan)
             {
                 Destroy(gameObject);
             }
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnDamageDone(GameObject otherGameObject)
         {
-            // Immediately destroy on impact if a health component was found on collided object
-            if (other.gameObject.GetComponent<HealthComponent>() != null || !mayBounceOnGround)
-            {
-                Destroy(gameObject);
-                return;
-            }
+            Destroy(gameObject);
         }
     }
 }

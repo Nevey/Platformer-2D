@@ -18,6 +18,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProjectileRed
       objectReference: {fileID: 0}
+    - target: {fileID: 5953426653935603694, guid: 0f3605f5a297ef4428aa36537745991e,
+        type: 3}
+      propertyPath: lifeSpan
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6858216038195475687, guid: 0f3605f5a297ef4428aa36537745991e,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4339806035667313249, guid: 0f3605f5a297ef4428aa36537745991e, type: 3}
   relativeSpawnPoint: {x: 0, y: 0}
-  spawnForce: 5
+  owner: {fileID: 0}
+  spawnForce: 7.5
 --- !u!1001 &7829948613071072121
 PrefabInstance:
   m_ObjectHideFlags: 0
