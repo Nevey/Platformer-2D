@@ -20,6 +20,7 @@ namespace Game.Characters
             characterController = GetComponentInParent<CharacterController>();
         }
 
+#if UNITY_EDITOR
         private void OnValidate()
         {
             if (PrefabStageUtility.GetCurrentPrefabStage() != null || owner == transform || owner == null)
@@ -32,6 +33,7 @@ namespace Game.Characters
                 throw Log.Exception($"No type of <b>CharacterController</b> found on Parent of <b>{name}</b>!");
             }
         }
+#endif
 
         protected override Vector2 GetSpawnDirectionNormalized()
         {
