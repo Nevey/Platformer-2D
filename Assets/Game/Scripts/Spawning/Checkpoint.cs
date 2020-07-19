@@ -1,4 +1,5 @@
 using System;
+using Game.DI;
 using UnityEngine;
 
 namespace Game.Spawning
@@ -7,12 +8,17 @@ namespace Game.Spawning
     [RequireComponent(typeof(SpriteRenderer))]
     public class Checkpoint : Spawner
     {
+        [SerializeField] private bool isInitialCheckpoint;
         [SerializeField] private Sprite inactiveSprite;
         [SerializeField] private Sprite activatedSprite;
+
+        [Inject] private CheckpointController checkpointController;
 
         private CircleCollider2D circleCollider2D;
         private SpriteRenderer spriteRenderer;
         private bool isActivated;
+
+        public bool IsInitialCheckpoint => isInitialCheckpoint;
 
         public event Action<Checkpoint> CheckpointActivatedEvent;
 
@@ -25,6 +31,15 @@ namespace Game.Spawning
 
             spriteRenderer = GetComponent<SpriteRenderer>();
             Deactivate();
+
+            checkpointController.RegisterCheckpoint(this);
+        }
+
+        protected override void OnDestroy()
+        {
+            checkpointController.UnregisterCheckpoint(this);
+
+            base.OnDestroy();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
