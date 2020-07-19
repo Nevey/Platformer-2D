@@ -17,8 +17,10 @@ namespace Game.Characters
     {
         [SerializeField] private float movementAcceleration = 1f;
         [SerializeField] private float maxMovementSpeed = 10f;
+        [SerializeField] private float maxJumpSpeed = 10f;
         [SerializeField] private float jumpStrength = 5f;
         [SerializeField] private float doubleJumpStrength = 2.5f;
+        [SerializeField] private float minDoubleJumpInterval = 5f;
         [SerializeField] private Transform handContainer;
 
         private new Rigidbody2D rigidbody2D;
@@ -29,6 +31,7 @@ namespace Game.Characters
         private ActionState movementActionState = ActionState.Stop;
         private JumpMode jumpMode;
         private Vector2 movementVector;
+        private float currentDoubleJumpInterval;
 
         protected MoveDirection moveDirection;
 
@@ -56,6 +59,10 @@ namespace Game.Characters
 
         protected virtual void Update()
         {
+            CheckForGroundHit();
+
+            currentDoubleJumpInterval += Time.deltaTime;
+
             if (movementActionState == ActionState.Stop && jumpMode == JumpMode.None)
             {
                 if (rigidbody2D.velocity == Vector2.zero)
@@ -79,8 +86,6 @@ namespace Game.Characters
 
         protected virtual void FixedUpdate()
         {
-            CheckForGroundHit();
-
             if (movementActionState == ActionState.Stop)
             {
                 return;
@@ -94,15 +99,20 @@ namespace Game.Characters
             }
 
             Vector2 force = movementVector * acceleration;
+
             Vector2 velocity = rigidbody2D.velocity + force;
             velocity.x = Mathf.Clamp(velocity.x, -maxMovementSpeed, maxMovementSpeed);
+
             rigidbody2D.velocity = velocity;
         }
 
         private void CheckForGroundHit()
         {
             LayerMask mask = LayerMask.GetMask("Ground", "Characters");
-            RaycastHit2D[] hits = Physics2D.CapsuleCastAll(transform.position, capsuleCollider2D.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.3f, mask);
+
+            // Note: Temp workaround to get scaled up characters "working"
+            Vector3 capsuleColliderSize = capsuleCollider2D.size * transform.lossyScale.magnitude;
+            RaycastHit2D[] hits = Physics2D.CapsuleCastAll(transform.position, capsuleColliderSize, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.3f, mask);
 
             if (hits.Length == 1 && jumpMode == JumpMode.None)
             {
@@ -182,19 +192,34 @@ namespace Game.Characters
                 return;
             }
 
-            // If current jump mode is already in Fall, we're gonna apply the double jump!
-            float strength = jumpMode == JumpMode.Fall ? doubleJumpStrength : jumpStrength;
+            if (currentDoubleJumpInterval < minDoubleJumpInterval && jumpMode != JumpMode.None)
+            {
+                return;
+            }
+
+            float strength = 0f;
+
+            switch (jumpMode)
+            {
+                case JumpMode.None:
+                    strength = jumpStrength;
+                    jumpMode = JumpMode.SingleJump;
+                    break;
+
+                case JumpMode.Fall:
+                case JumpMode.SingleJump:
+                    strength = doubleJumpStrength;
+                    jumpMode = JumpMode.DoubleJump;
+                    break;
+                
+                case JumpMode.DoubleJump:
+                    // Do nothing
+                    break;
+            }
 
             rigidbody2D.AddForce(Vector2.up * strength, ForceMode2D.Impulse);
 
-            if ((int)jumpMode < (int)JumpMode.DoubleJump)
-            {
-                jumpMode++;
-            }
-            else if (jumpMode == JumpMode.Fall)
-            {
-                jumpMode = JumpMode.DoubleJump;
-            }
+            currentDoubleJumpInterval = 0f;
 
             physicsMaterialSwapper.Swap();
             characterAnimator.SetJumpMode();
