@@ -21,7 +21,11 @@ namespace Game.Health
         {
             healthComponent = GetComponent<HealthComponent>();
             healthComponent.HealthUpdatedEvent += OnHealthUpdated;
+        }
 
+        private void Start()
+        {
+            SetText(healthComponent.CurrentHealth);
             FadeOutText();
         }
 
@@ -40,9 +44,14 @@ namespace Game.Health
             fadeTween?.Kill();
             fadeTween = text.DOFade(1f, fadeInDuration);
 
-            text.SetText(health.ToString());
+            SetText(health);
 
             Invoke(nameof(FadeOutText), showDuration);
+        }
+
+        private void SetText(int health)
+        {
+            text.SetText(health.ToString());
         }
 
         private void FadeOutText()
