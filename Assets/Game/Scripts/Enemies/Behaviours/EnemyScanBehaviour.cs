@@ -45,7 +45,7 @@ namespace Game.Enemies.Behaviours
             Debug.DrawRay(transform.position, scanDirection, Color.cyan, 0.5f);
 
             // Find the ground in front of my feet!
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, scanDirection, 1f, 1 << 8);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, scanDirection, 1f, LayerMask.GetMask("Ground"));
 
             // TODO: Make this check more scalable
             if (!hit || hit && (hit.transform.tag.Equals("Trap") || hit.transform.tag.Equals("Trampoline")))
@@ -57,13 +57,13 @@ namespace Game.Enemies.Behaviours
         private void ScanForWall()
         {
             Vector2 scanPosition = transform.position;
-            scanPosition.y -= 0.25f;
+            scanPosition.y -= 0.35f;
 
             Vector2 scanDirection = new Vector2(moveDirection.GetVectorNormalized().x, 0f);
 
             Debug.DrawRay(scanPosition, scanDirection, Color.cyan, 0.5f);
 
-            RaycastHit2D hit = Physics2D.Raycast(scanPosition, scanDirection, 1f, 1 << 8);
+            RaycastHit2D hit = Physics2D.Raycast(scanPosition, scanDirection, 1f, LayerMask.GetMask("Ground"));
 
             if (hit)
             {
