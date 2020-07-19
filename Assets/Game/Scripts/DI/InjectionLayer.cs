@@ -45,7 +45,7 @@ namespace Game.DI
                     }
                 }
 
-                if (injectedInstance == null)
+                if (injectedInstance == null || injectedInstance.ToString().Equals("null"))
                 {
                     throw Log.Exception(
                         $"Something went wrong while trying to assign " +
