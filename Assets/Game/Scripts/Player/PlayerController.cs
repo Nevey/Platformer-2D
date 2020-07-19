@@ -55,7 +55,7 @@ namespace Game.Player
 
         private void OnWin()
         {
-            HandleMovement(ActionState.Stop, MoveDirection.Right);
+            HandleMovement(ActionState.Stop, MoveDirection);
             isDisabled = true;
         }
     }
