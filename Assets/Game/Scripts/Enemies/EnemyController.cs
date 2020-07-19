@@ -43,7 +43,7 @@ namespace Game.Enemies
                 routine = null;
             }
 
-            HandleMovement(ActionState.Stop, MoveDirection.Right);
+            HandleMovement(ActionState.Stop, MoveDirection);
         }
     }
 }

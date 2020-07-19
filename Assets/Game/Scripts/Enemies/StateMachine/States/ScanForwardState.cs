@@ -8,6 +8,7 @@ namespace Game.Enemies.StateMachines.States
     {
         private EnemyController enemyController;
         private EnemyScanBehaviour enemyScanBehaviour;
+        private EnemyTargetBehaviour enemyTargetBehaviour;
 
         protected override void OnEnter()
         {
@@ -15,6 +16,7 @@ namespace Game.Enemies.StateMachines.States
             enemyController = movementStateMachine.EnemyController;
 
             enemyScanBehaviour = enemyController.GetComponent<EnemyScanBehaviour>();
+            enemyTargetBehaviour = enemyController.GetComponent<EnemyTargetBehaviour>();
 
             enemyScanBehaviour.NoGroundFoundEvent += StopMovementAndToNextState;
             enemyScanBehaviour.WallFoundEvent += StopMovementAndToNextState;
@@ -34,8 +36,9 @@ namespace Game.Enemies.StateMachines.States
             owner.ToNextState();
         }
 
-        private void OnPlayerFound(Transform obj)
+        private void OnPlayerFound(Transform target)
         {
+            enemyTargetBehaviour.SetTarget(target);
             StopMovementAndToNextState();
         }
     }

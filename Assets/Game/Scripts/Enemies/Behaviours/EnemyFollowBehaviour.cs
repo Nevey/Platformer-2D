@@ -1,4 +1,5 @@
 using Game.Characters.Movement;
+using Game.Utils;
 using UnityEngine;
 
 namespace Game.Enemies.Behaviours
@@ -26,12 +27,14 @@ namespace Game.Enemies.Behaviours
                 return;
             }
 
-            MoveDirection? newMoveDirection = MoveDirectionExtensions.GetMoveDirection(transform, enemyTargetBehaviour.Target, 2f);
+            MoveDirection? newMoveDirection = MoveDirectionExtensions.GetMoveDirection(transform, enemyTargetBehaviour.Target, 0.2f);
 
-            if (newMoveDirection == moveDirection)
+            if (newMoveDirection == null || newMoveDirection == moveDirection)
             {
                 return;
             }
+
+            Log.Write(newMoveDirection.Value);
 
             // If following is paused, but our new move direction has changed, we can currently always assume
             // that we want to resume following our target

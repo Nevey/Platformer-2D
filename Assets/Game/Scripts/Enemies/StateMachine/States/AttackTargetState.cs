@@ -9,6 +9,7 @@ namespace Game.Enemies.StateMachines.States
         private EnemyScanBehaviour enemyScanBehaviour;
         private EnemyFollowBehaviour enemyFollowBehaviour;
         private EnemyAttackBehaviour enemyAttackBehaviour;
+        private EnemyTargetBehaviour enemyTargetBehaviour;
 
         protected override void OnEnter()
         {
@@ -18,6 +19,7 @@ namespace Game.Enemies.StateMachines.States
             enemyScanBehaviour = enemyController.GetComponent<EnemyScanBehaviour>();
             enemyFollowBehaviour = enemyController.GetComponent<EnemyFollowBehaviour>();
             enemyAttackBehaviour = enemyController.GetComponent<EnemyAttackBehaviour>();
+            enemyTargetBehaviour = enemyController.GetComponent<EnemyTargetBehaviour>();
 
             if (enemyFollowBehaviour.StartFollow())
             {
@@ -45,6 +47,7 @@ namespace Game.Enemies.StateMachines.States
         {
             enemyFollowBehaviour.StopFollow();
             enemyAttackBehaviour.StopAttack();
+            enemyTargetBehaviour.ClearTarget();
 
             owner.ToNextState();
         }
