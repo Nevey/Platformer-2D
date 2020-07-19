@@ -16,6 +16,9 @@ namespace Game.UserInput
 
         private void Awake()
         {
+            // TODO: To avoid the need to do this, wrap up injection layer implementation
+            ClearListeners();
+
             leftButton.PressedEvent += OnButtonDown;
             leftButton.ReleasedEvent += OnButtonReleased;
 
@@ -31,17 +34,7 @@ namespace Game.UserInput
 
         private void OnDestroy()
         {
-            leftButton.PressedEvent -= OnButtonDown;
-            leftButton.ReleasedEvent -= OnButtonReleased;
-
-            rightButton.PressedEvent -= OnButtonDown;
-            rightButton.ReleasedEvent -= OnButtonReleased;
-
-            jumpButton.PressedEvent -= OnButtonDown;
-            jumpButton.ReleasedEvent -= OnButtonReleased;
-
-            shootButton.PressedEvent -= OnButtonDown;
-            shootButton.ReleasedEvent -= OnButtonReleased;
+            ClearListeners();
         }
 
         #if UNITY_EDITOR
@@ -88,6 +81,21 @@ namespace Game.UserInput
             }
         }
         #endif
+
+        private void ClearListeners()
+        {
+            leftButton.PressedEvent -= OnButtonDown;
+            leftButton.ReleasedEvent -= OnButtonReleased;
+
+            rightButton.PressedEvent -= OnButtonDown;
+            rightButton.ReleasedEvent -= OnButtonReleased;
+
+            jumpButton.PressedEvent -= OnButtonDown;
+            jumpButton.ReleasedEvent -= OnButtonReleased;
+
+            shootButton.PressedEvent -= OnButtonDown;
+            shootButton.ReleasedEvent -= OnButtonReleased;
+        }
 
         private void OnButtonDown(PlayerInputAction playerInputAction)
         {
