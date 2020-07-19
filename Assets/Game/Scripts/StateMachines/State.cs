@@ -22,14 +22,14 @@ namespace Game.StateMachines
 
         public void Enter()
         {
-            Log.Write(GetType().Name);
+            // Log.Write(GetType().Name);
             Injector.Inject(this);
             OnEnter();
         }
 
         public void Exit()
         {
-            Log.Write(GetType().Name);
+            // Log.Write(GetType().Name);
             OnExit();
             Injector.Dump(this);
         }
