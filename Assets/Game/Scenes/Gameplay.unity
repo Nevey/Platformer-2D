@@ -1143,6 +1143,11 @@ PrefabInstance:
       propertyPath: startHealth
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 2662253639699358864, guid: 77a3d0dc406d6d5458d67913170065cf,
+        type: 3}
+      propertyPath: spawnAmount
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2843490709777401072, guid: 77a3d0dc406d6d5458d67913170065cf,
         type: 3}
       propertyPath: m_Color.r
@@ -22144,6 +22149,11 @@ PrefabInstance:
         type: 3}
       propertyPath: startHealth
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662253639699358864, guid: 77a3d0dc406d6d5458d67913170065cf,
+        type: 3}
+      propertyPath: spawnAmount
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2843490709777401074, guid: 77a3d0dc406d6d5458d67913170065cf,
         type: 3}
