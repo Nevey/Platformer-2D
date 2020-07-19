@@ -1,7 +1,6 @@
-using System;
-using Game.Cameras;
 using Game.DI;
-using Game.GameplayFlow;
+using Game.Gameplay.Cameras;
+using Game.Gameplay.GameplayFlow;
 using Game.StateMachines;
 using Game.UI;
 using Game.UI.Screens;

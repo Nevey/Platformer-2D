@@ -1,6 +1,6 @@
-using Game.Cameras;
 using Game.DI;
-using Game.Scoring;
+using Game.Gameplay.Cameras;
+using Game.Gameplay.Scoring;
 using Game.StateMachines;
 using Game.UI;
 using Game.UI.Screens;
