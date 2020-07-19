@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Game.Cameras
 {
+    [RequireComponent(typeof(Camera))]
     [Injectable(Singleton = true)]
     public class CameraFollowTarget : MonoBehaviour
     {
@@ -10,6 +11,7 @@ namespace Game.Cameras
         [SerializeField] private float followSpeed = 1f;
         [SerializeField] private float distanceZ = 10f;
 
+        private new Camera camera;
         private Transform target;
         private Vector2 followVelocity;
         private Vector2 targetPosition;
@@ -17,6 +19,14 @@ namespace Game.Cameras
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
+
+            camera = GetComponent<Camera>();
+            DisableCamera();
+
+            // TODO: To avoid the need to do this, wrap up injection layer implementation
+            UnassignTarget();
+
             currentPosition = targetPosition = transform.position;
         }
 
@@ -39,6 +49,16 @@ namespace Game.Cameras
         public void UnassignTarget()
         {
             target = null;
+        }
+
+        public void EnableCamera()
+        {
+            camera.enabled = true;
+        }
+
+        public void DisableCamera()
+        {
+            camera.enabled = false;
         }
     }
 }

@@ -1,4 +1,6 @@
+using Game.Cameras;
 using Game.DI;
+using Game.Scoring;
 using Game.StateMachines;
 using Game.UI;
 using Game.UI.Screens;
@@ -10,17 +12,24 @@ namespace Game.AppFlow.States
     {
         [Inject] private UIController uiController;
         [Inject] private SceneLoader sceneLoader;
+        [Inject] private ScoreController scoreController;
+        [Inject] private CameraFollowTarget cameraFollowTarget;
 
         private GameOverScreen gameOverScreen;
 
         protected override void OnEnter()
         {
-            gameOverScreen = uiController.ShowScreen<GameOverScreen>();
+            gameOverScreen = uiController.GetScreen<GameOverScreen>();
+            gameOverScreen.SetScoreValue(scoreController.Score);
+
+            uiController.ShowScreen<GameOverScreen>();
+
             gameOverScreen.ContinueInputGivenEvent += OnContinueInputGiven;
         }
 
         protected override void OnExit()
         {
+            
         }
 
         private void OnContinueInputGiven()
@@ -31,6 +40,7 @@ namespace Game.AppFlow.States
 
         private void OnUnloadFinished()
         {
+            cameraFollowTarget.DisableCamera();
             owner.ToNextState();
         }
     }

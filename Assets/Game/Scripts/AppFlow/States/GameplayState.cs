@@ -1,4 +1,5 @@
 using System;
+using Game.Cameras;
 using Game.DI;
 using Game.GameplayFlow;
 using Game.StateMachines;
@@ -13,6 +14,7 @@ namespace Game.AppFlow.States
         [Inject] private SceneLoader sceneLoader;
         [Inject] private UIController uiController;
         [Inject] private GameOverController gameOverController;
+        [Inject] private CameraFollowTarget cameraFollowTarget;
 
         private GameplayScreen gameplayScreen;
 
@@ -23,6 +25,8 @@ namespace Game.AppFlow.States
             sceneLoader.LoadScenes(true, "Gameplay");
 
             gameOverController.WinEvent += OnWin;
+
+            cameraFollowTarget.EnableCamera();
         }
 
         protected override void OnExit()
