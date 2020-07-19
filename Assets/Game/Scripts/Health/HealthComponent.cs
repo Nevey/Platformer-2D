@@ -23,6 +23,8 @@ namespace Game.Health
             base.Awake();
 
             currentHealth = startHealth;
+
+            // We're doing this for initialization purposes
             UpdateHealth(0);
 
             deathController.RegisterHealthComponent(this);
