@@ -16,6 +16,7 @@ MonoBehaviour:
   relativeSpawnPoint: {x: 0, y: 0}
   owner: {fileID: 0}
   spawnForce: 7.5
+  maxTorque: 1
 --- !u!1001 &7829948613071072121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23,6 +24,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1568462454700593881, guid: 3573aa7efad43a14ea2e502bd75481ba,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 8925429463342351710, guid: 3573aa7efad43a14ea2e502bd75481ba,
         type: 3}
       propertyPath: m_Name

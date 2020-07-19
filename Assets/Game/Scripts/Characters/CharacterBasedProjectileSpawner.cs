@@ -9,7 +9,7 @@ using UnityEditor.Experimental.SceneManagement;
 
 namespace Game.Characters
 {
-    public abstract class CharacterBasedProjectileSpawner : ProjectileSpawner
+    public abstract class CharacterBasedProjectileSpawner : SpawnerAddForce
     {
         protected CharacterController characterController;
 

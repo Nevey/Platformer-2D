@@ -37,6 +37,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackInterval: 1.5
+--- !u!114 &2662253639699358864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2843490709777401077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff2cfb0a356fc4bbce936a3879d922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4364987331292550227, guid: 43211777b1e3e484aaf9f37d4f5af0fb, type: 3}
+  relativeSpawnPoint: {x: 0, y: 0}
+  owner: {fileID: 0}
+  spawnForce: 3
+  maxTorque: 1
+  spawnAmount: 7
+  minVerticalSpawnForce: 1
+  maxVerticlaSpawnForce: 2
+  maxHorizontalSpawnforce: 2
 --- !u!114 &4902945462471044555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,6 +85,7 @@ MonoBehaviour:
   movementAcceleration: 1
   maxMovementSpeed: 3
   jumpStrength: 2.5
+  doubleJumpStrength: 2.5
   handContainer: {fileID: 2637259195395685647}
   delayInSeconds: 0
 --- !u!114 &5555346430640895712

@@ -1,12 +1,13 @@
-using Game.Spawning;
+﻿using Game.Spawning;
 using UnityEngine;
 
 namespace Game.Projectiles
 {
-    public abstract class ProjectileSpawner : Spawner
+    public abstract class SpawnerAddForce : Spawner
     {
         [Header("Projectile Spawner Settings")]
-        [SerializeField] private float spawnForce;
+        [SerializeField] private float spawnForce = 1f;
+        [SerializeField] private float maxTorque = 1f;
 
         protected override void Awake()
         {
@@ -19,16 +20,9 @@ namespace Game.Projectiles
         {
             GameObject instance = base.Spawn(ignoreCollisionWithSpawnerOwner);
 
-            Projectile projectileInstance = instance.GetComponent<Projectile>();
-
-            if (projectileInstance == null)
-            {
-                instance.AddComponent<Projectile>();
-            }
-
             Rigidbody2D rigidbody2DInstance = instance.GetComponent<Rigidbody2D>();
             rigidbody2DInstance.AddForce(GetSpawnDirectionNormalized() * spawnForce, ForceMode2D.Impulse);
-            rigidbody2DInstance.AddTorque(spawnForce, ForceMode2D.Impulse);
+            rigidbody2DInstance.AddTorque(Random.Range(-maxTorque, maxTorque), ForceMode2D.Impulse);
 
             return instance;
         }

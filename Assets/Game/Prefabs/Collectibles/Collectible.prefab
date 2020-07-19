@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3756599892562211279}
   - component: {fileID: 4018142785853687350}
   - component: {fileID: -125917864983663938}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Collectible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,6 +64,8 @@ MonoBehaviour:
   destroyOnCollect: 1
   minDistanceUntilCollect: 0.1
   moveTowardsAcceleration: 0.01
+  scaleDuringCollect: 0
+  pickupTrigger: {fileID: 3756599892562211279}
 --- !u!212 &-125917864983663938
 SpriteRenderer:
   m_ObjectHideFlags: 0

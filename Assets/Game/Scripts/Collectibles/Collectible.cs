@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace Game.Collectibles
 {
-    [RequireComponent(typeof(Collider2D))]
     public class Collectible : MonoBehaviour
     {
         [SerializeField] private bool destroyOnCollect = true;
         [SerializeField] private float minDistanceUntilCollect = 0.1f;
         [SerializeField] private float moveTowardsAcceleration = 0.1f;
         [SerializeField] private bool scaleDuringCollect;
+        [SerializeField] private Collider2D pickupTrigger;
 
-        private new Collider2D collider2D;
+        private Collider2D[] allColliders;
         private float moveTowardsSpeed;
 
         private enum CollectMode
@@ -29,8 +29,9 @@ namespace Game.Collectibles
 
         private void Awake()
         {
-            collider2D = GetComponent<Collider2D>();
-            collider2D.isTrigger = true;
+            allColliders = GetComponentsInChildren<Collider2D>();
+
+            pickupTrigger.isTrigger = true;
         }
 
         private void Update()
@@ -71,9 +72,15 @@ namespace Game.Collectibles
                 return;
             }
 
-            collider2D.enabled = false;
+            pickupTrigger.enabled = false;
             target = other.transform;
             collectMode = CollectMode.MovingToTarget;
+
+            // Remove all colliders
+            for (int i = 0; i < allColliders.Length; i++)
+            {
+                Destroy(allColliders[i]);
+            }
 
             if (scaleDuringCollect)
             {
