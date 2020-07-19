@@ -46,7 +46,7 @@ namespace Game.UI
             visibleState = VisibleState.Hidden;
 
             // In case of application quit, we need a specific null check due to Unity's custom approach
-            if (gameObject.IsNull())
+            if (this.IsNull())
             {
                 return;
             }
