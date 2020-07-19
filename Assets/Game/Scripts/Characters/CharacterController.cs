@@ -4,6 +4,7 @@ using Game.Characters.Movement;
 using Game.Characters.Physics;
 using Game.DI;
 using Game.UserInput;
+using Game.Utils;
 using UnityEngine;
 
 namespace Game.Characters
@@ -78,7 +79,6 @@ namespace Game.Characters
 
         protected virtual void FixedUpdate()
         {
-            // TODO: Check if it's better to use "OnCollisionStay"
             CheckForGroundHit();
 
             if (movementActionState == ActionState.Stop)
@@ -121,7 +121,7 @@ namespace Game.Characters
                     continue;
                 }
 
-                Debug.DrawRay(hits[i].point, hits[i].normal, Color.red, 0.5f);
+                Debug.DrawRay(hits[i].point, hits[i].normal, Color.red, 0.2f);
 
                 float angle = Vector2.Angle(hits[i].normal, Vector2.up);
 
@@ -129,7 +129,6 @@ namespace Game.Characters
                 {
                     continue;
                 }
-
 
                 physicsMaterialSwapper.RevertSwap();
                 jumpMode = JumpMode.None;
