@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instaKill: 0
-  damage: 25
+  damage: 10
 --- !u!114 &5953426653935603694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,5 +149,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 266da5955f03cfc4f844428f103c80f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mayBounceOnGround: 1
-  lifeSpawn: 2
+  lifeSpan: 1
