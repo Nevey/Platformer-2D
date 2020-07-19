@@ -1,4 +1,5 @@
 ﻿using Game.DI;
+using Game.Utils;
 
 namespace Game.UI
 {
@@ -43,6 +44,12 @@ namespace Game.UI
             }
 
             visibleState = VisibleState.Hidden;
+
+            // In case of application quit, we need a specific null check due to Unity's custom approach
+            if (gameObject.IsNull())
+            {
+                return;
+            }
 
             gameObject.SetActive(false);
             OnHide();
