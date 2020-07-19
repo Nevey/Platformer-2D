@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementAcceleration: 1
   maxMovementSpeed: 4
-  maxJumpSpeed: 4.5
   jumpStrength: 3.75
   doubleJumpStrength: 2.5
   minDoubleJumpInterval: 0.15
@@ -54,6 +53,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 653239977657492617, guid: 375942608af566f4abd7e38adec070fd,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 653239977657492617, guid: 375942608af566f4abd7e38adec070fd,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 653239977657492618, guid: 375942608af566f4abd7e38adec070fd,
         type: 3}

@@ -109,10 +109,7 @@ namespace Game.Characters
         private void CheckForGroundHit()
         {
             LayerMask mask = LayerMask.GetMask("Ground", "Characters");
-
-            // Note: Temp workaround to get scaled up characters "working"
-            Vector3 capsuleColliderSize = capsuleCollider2D.size * transform.lossyScale.magnitude;
-            RaycastHit2D[] hits = Physics2D.CapsuleCastAll(transform.position, capsuleColliderSize, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.3f, mask);
+            RaycastHit2D[] hits = Physics2D.CapsuleCastAll(transform.position, capsuleCollider2D.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.03f, mask);
 
             if (hits.Length == 1 && jumpMode == JumpMode.None)
             {
