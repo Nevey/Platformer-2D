@@ -63,13 +63,15 @@ namespace Game.Gameplay.Characters
 
             currentDoubleJumpInterval += Time.deltaTime;
 
-            if (movementActionState == ActionState.Stop && jumpMode == JumpMode.None)
+            characterAnimator.SetWalkSpeed(rigidbody2D.velocity.x);
+            characterAnimator.SetJumpSpeed(rigidbody2D.velocity.y);
+
+            if (movementActionState == ActionState.Stop
+                && jumpMode == JumpMode.None
+                && rigidbody2D.velocity == Vector2.zero)
             {
-                if (rigidbody2D.velocity == Vector2.zero)
-                {
-                    physicsMaterialSwapper.RevertSwap();
-                    characterAnimator.SetIdleMode();
-                }
+                physicsMaterialSwapper.RevertSwap();
+                characterAnimator.SetIdleMode();
 
                 return;
             }
@@ -79,9 +81,6 @@ namespace Game.Gameplay.Characters
                 physicsMaterialSwapper.RevertSwap();
                 characterAnimator.SetWalkMode();
             }
-
-            characterAnimator.SetWalkSpeed(rigidbody2D.velocity.x);
-            characterAnimator.SetJumpSpeed(rigidbody2D.velocity.y);
         }
 
         protected virtual void FixedUpdate()
