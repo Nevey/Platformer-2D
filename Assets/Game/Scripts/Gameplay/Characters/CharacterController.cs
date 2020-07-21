@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Game.DI;
 using Game.Gameplay.Characters.Animations;
 using Game.Gameplay.Characters.Movement;
@@ -110,7 +111,9 @@ namespace Game.Gameplay.Characters
             LayerMask mask = LayerMask.GetMask("Ground", "Characters");
             RaycastHit2D[] hits = Physics2D.CapsuleCastAll(transform.position, capsuleCollider2D.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.03f, mask);
 
-            if (hits.Length == 1 && jumpMode == JumpMode.None)
+            RaycastHit2D[] filteredHits = hits.Where(x => x.collider.isTrigger == false).ToArray();
+
+            if (filteredHits.Length == 1 && jumpMode == JumpMode.None)
             {
                 physicsMaterialSwapper.Swap();
                 characterAnimator.SetJumpMode();
@@ -120,16 +123,16 @@ namespace Game.Gameplay.Characters
                 return;
             }
 
-            for (int i = 0; i < hits.Length; i++)
+            for (int i = 0; i < filteredHits.Length; i++)
             {
-                if (hits[i].transform == transform)
+                if (filteredHits[i].transform == transform)
                 {
                     continue;
                 }
 
-                Debug.DrawRay(hits[i].point, hits[i].normal, Color.red, 0.2f);
+                Debug.DrawRay(filteredHits[i].point, filteredHits[i].normal, Color.red, 0.2f);
 
-                float angle = Vector2.Angle(hits[i].normal, Vector2.up);
+                float angle = Vector2.Angle(filteredHits[i].normal, Vector2.up);
 
                 if (Mathf.Abs(angle) > 45f)
                 {
