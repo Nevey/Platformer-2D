@@ -23,9 +23,9 @@ namespace Game.Gameplay.Characters
         [SerializeField] private float minDoubleJumpInterval = 5f;
         [SerializeField] private Transform handContainer;
 
-        private new Rigidbody2D rigidbody2D;
+        protected new Rigidbody2D rigidbody2D;
         private CapsuleCollider2D capsuleCollider2D;
-        private CharacterAnimator characterAnimator;
+        protected CharacterAnimator characterAnimator;
         private PhysicsMaterialSwapper physicsMaterialSwapper;
 
         private ActionState movementActionState = ActionState.Stop;
@@ -99,21 +99,37 @@ namespace Game.Gameplay.Characters
             }
 
             Vector2 force = movementVector * acceleration;
-
             Vector2 velocity = rigidbody2D.velocity + force;
+
+            const float rayDistance = 0.5f;
+            // Check if we're standing against a wall in given direction
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, movementVector, rayDistance, LayerMask.GetMask("Characters", "Ground"));
+            hits = FilterTriggerColliders(hits);
+
+            // Will always include self
+            if (hits.Length > 1)
+            {
+                Debug.DrawRay(transform.position, movementVector * rayDistance, Color.magenta, 1f);
+                velocity.x = 0f;
+            }
+
             velocity.x = Mathf.Clamp(velocity.x, -maxMovementSpeed, maxMovementSpeed);
 
             rigidbody2D.velocity = velocity;
+        }
+
+        private RaycastHit2D[] FilterTriggerColliders(RaycastHit2D[] hits)
+        {
+            return hits.Where(x => x.collider.isTrigger == false).ToArray();
         }
 
         private void CheckForGroundHit()
         {
             LayerMask mask = LayerMask.GetMask("Ground", "Characters");
             RaycastHit2D[] hits = Physics2D.CapsuleCastAll(transform.position, capsuleCollider2D.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, 0.03f, mask);
+            hits = FilterTriggerColliders(hits);
 
-            RaycastHit2D[] filteredHits = hits.Where(x => x.collider.isTrigger == false).ToArray();
-
-            if (filteredHits.Length == 1 && jumpMode == JumpMode.None)
+            if (hits.Length == 1 && jumpMode == JumpMode.None)
             {
                 physicsMaterialSwapper.Swap();
                 characterAnimator.SetJumpMode();
@@ -123,16 +139,16 @@ namespace Game.Gameplay.Characters
                 return;
             }
 
-            for (int i = 0; i < filteredHits.Length; i++)
+            for (int i = 0; i < hits.Length; i++)
             {
-                if (filteredHits[i].transform == transform)
+                if (hits[i].transform == transform)
                 {
                     continue;
                 }
 
-                Debug.DrawRay(filteredHits[i].point, filteredHits[i].normal, Color.red, 0.2f);
+                Debug.DrawRay(hits[i].point, hits[i].normal, Color.red, 0.2f);
 
-                float angle = Vector2.Angle(filteredHits[i].normal, Vector2.up);
+                float angle = Vector2.Angle(hits[i].normal, Vector2.up);
 
                 if (Mathf.Abs(angle) > 45f)
                 {

@@ -42,8 +42,17 @@ namespace Game.Gameplay.Characters.Animations
                     break;
                 
                 case AnimationMode.Walk:
-                    SetAnimationInterval(Mathf.Abs(walkSpeed * walkSpeedMultiplier));
-                    SetIsFlippedHorizontally(walkSpeed < 0);
+
+                    if (walkSpeed == 0f)
+                    {
+                        SetIdleMode();
+                    }
+                    else
+                    {
+                        SetWalkMode();
+                        SetAnimationInterval(Mathf.Abs(walkSpeed * walkSpeedMultiplier));
+                        SetIsFlippedHorizontally(walkSpeed < 0);
+                    }
                     break;
                 
                 case AnimationMode.Jump:
@@ -62,6 +71,11 @@ namespace Game.Gameplay.Characters.Animations
 
         public void SetIdleMode()
         {
+            if (animationMode == AnimationMode.Idle)
+            {
+                return;
+            }
+
             SetAnimationMode(AnimationMode.Idle);
             SetSprites(idleSprites);
             SetDefaultAnimationInterval();
@@ -69,12 +83,22 @@ namespace Game.Gameplay.Characters.Animations
 
         public void SetWalkMode()
         {
+            if (animationMode == AnimationMode.Walk)
+            {
+                return;
+            }
+
             SetAnimationMode(AnimationMode.Walk);
             SetSprites(walkSprites);
         }
 
         public void SetJumpMode()
         {
+            if (animationMode == AnimationMode.Jump)
+            {
+                return;
+            }
+
             SetAnimationMode(AnimationMode.Jump);
             SetSprites(jumpSprites);
         }
