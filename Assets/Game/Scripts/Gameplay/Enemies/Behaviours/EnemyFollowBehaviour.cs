@@ -29,6 +29,12 @@ namespace Game.Gameplay.Enemies.Behaviours
 
             MoveDirection? newMoveDirection = MoveDirectionExtensions.GetMoveDirection(transform, enemyTargetBehaviour.Target);
 
+            if (newMoveDirection == null)
+            {
+                enemyController.StopMovement();
+                return;
+            }
+
             if (newMoveDirection == null || (newMoveDirection == moveDirection && newMoveDirection == enemyController.MoveDirection))
             {
                 const float deadZone = 2.5f;
@@ -45,18 +51,15 @@ namespace Game.Gameplay.Enemies.Behaviours
 
             // If following is paused, but our new move direction has changed, we can currently always assume
             // that we want to resume following our target
-            if (isFollowingPaused)
+            if (isFollowingPaused && newMoveDirection != enemyController.MoveDirection)
             {
                 ResumeFollow();
             }
 
-            if (newMoveDirection == null)
+            if (!isFollowingPaused)
             {
-                enemyController.StopMovement();
-                return;
+                enemyController.StartMovement(newMoveDirection.Value);
             }
-
-            enemyController.StartMovement(newMoveDirection.Value);
 
             moveDirection = newMoveDirection;
         }
