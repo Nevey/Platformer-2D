@@ -27,11 +27,18 @@ namespace Game.Gameplay.Enemies.Behaviours
                 return;
             }
 
-            MoveDirection? newMoveDirection = MoveDirectionExtensions.GetMoveDirection(transform, enemyTargetBehaviour.Target, 0.2f);
+            MoveDirection? newMoveDirection = MoveDirectionExtensions.GetMoveDirection(transform, enemyTargetBehaviour.Target);
 
-            if (newMoveDirection == null || newMoveDirection == moveDirection)
+            if (newMoveDirection == null || (newMoveDirection == moveDirection && newMoveDirection == enemyController.MoveDirection))
             {
-                return;
+                const float deadZone = 2.5f;
+                float distance = Vector3.Distance(transform.position, enemyTargetBehaviour.Target.position);
+
+                if (distance < deadZone)
+                {
+                    enemyController.StopMovement();
+                    return;
+                }
             }
 
             Log.Write(newMoveDirection.Value);

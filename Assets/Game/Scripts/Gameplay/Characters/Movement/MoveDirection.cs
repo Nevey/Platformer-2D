@@ -24,16 +24,16 @@ namespace Game.Gameplay.Characters.Movement
             return Vector2.zero;
         }
 
-        public static MoveDirection? GetMoveDirection(Transform self, Transform target, float deadZone)
+        public static MoveDirection? GetMoveDirection(Transform self, Transform target)
         {
             Vector3 directionVector = target.position - self.position;
 
-            if (directionVector.x > deadZone)
+            if (directionVector.x > 0)
             {
                 return MoveDirection.Right;
             }
 
-            if (directionVector.x < -deadZone)
+            if (directionVector.x < 0)
             {
                 return MoveDirection.Left;
             }
