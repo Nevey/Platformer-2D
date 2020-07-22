@@ -21,6 +21,8 @@ namespace Game.Gameplay.Characters
         [SerializeField] private float jumpStrength = 5f;
         [SerializeField] private float doubleJumpStrength = 2.5f;
         [SerializeField] private float minDoubleJumpInterval = 5f;
+        [Tooltip("Offset for character to stop walking into a wall")]
+        [SerializeField] private float wallStopOffset = 0.2f;
         [SerializeField] private Transform handContainer;
 
         protected new Rigidbody2D rigidbody2D;
@@ -32,6 +34,7 @@ namespace Game.Gameplay.Characters
         private JumpMode jumpMode;
         private Vector2 movementVector;
         private float currentDoubleJumpInterval;
+        private float wallStopRayDistance;
 
         protected MoveDirection moveDirection;
 
@@ -49,6 +52,8 @@ namespace Game.Gameplay.Characters
             physicsMaterialSwapper = GetComponent<PhysicsMaterialSwapper>();
 
             characterAnimator.SetIdleMode();
+
+            wallStopRayDistance = (capsuleCollider2D.size.x / 2f) + wallStopOffset;
         }
 
         protected override void Start()
@@ -100,15 +105,14 @@ namespace Game.Gameplay.Characters
             Vector2 force = movementVector * acceleration;
             Vector2 velocity = rigidbody2D.velocity + force;
 
-            const float rayDistance = 0.5f;
-            // Check if we're standing against a wall in given direction
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, movementVector, rayDistance, LayerMask.GetMask("Characters", "Ground"));
+            // Check if we're running into a wall in given direction
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, movementVector, wallStopRayDistance, LayerMask.GetMask("Characters", "Ground"));
             hits = FilterTriggerColliders(hits);
 
             // Will always include self
             if (hits.Length > 1)
             {
-                Debug.DrawRay(transform.position, movementVector * rayDistance, Color.magenta, 1f);
+                Debug.DrawRay(transform.position, movementVector * wallStopRayDistance, Color.magenta, 1f);
                 velocity.x = 0f;
             }
 
